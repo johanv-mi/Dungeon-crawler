@@ -1,0 +1,129 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.mac {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.body {
+  height: 990px;
+  width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 3px solid black;
+  border-radius: 15px;
+  background-color: #d7ccaa;
+  box-shadow: 0 40px 90px -35px rgba(10, 20, 10, 10);
+  z-index: 1;
+}
+
+.screenhole {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 550px;
+  width: 740px;
+  margin-top: 90px;
+  border: 2px solid black;
+  border-radius: 15px;
+  background-image: linear-gradient(to bottom left, #8c856f 50%, #fcf2d5 55%);
+}
+
+.screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 455px;
+  width: 680px;
+  border-radius: 15px;
+  border: 1px solid black;
+  background-color: black;
+  
+}
+
+.program {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 385px;
+  width: 610px;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.content {
+  height: 365px;
+  width: 590px;
+  font-family: Krungthep;
+  font-size: 2rem;
+}
+
+.spacertop {
+  height: 140px;
+}
+
+.floppy {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100.5%;
+  height: 25px;
+  background-color: #d7ccaa;
+  border-top: 2px solid #9f977e;
+  border-bottom: 2px solid #f3e6c0;
+}
+
+.floppyhole {
+  height: 21px;
+  width: 300px;
+  margin-right: 20px;
+  background-color: black;
+  border-right: 2px solid #9f977e;
+  border-left: 2px solid #f3e6c0;
+}
+
+#floppydot {
+  margin-right: 80px;
+}
+
+#floppyspan {
+  width: 500px;
+}
+
+.logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 20px;
+  font-size: 35px;
+  font-family: 'Garamond';
+}
+
+#applelogo {
+  margin-bottom: 12px;
+  font-size: 55;
+}
+
+#logospan {
+  width: 400px;
+}
+
+.bottom {
+  height: 140px;
+  width: 870px;
+  border: 2px solid black;
+  background-color: #d7ccaa;
+  border-radius: 0px 0px 15px 15px ;
+  box-shadow: 0 40px 90px -35px rgba(10, 20, 10, 10);
+}
