@@ -92,7 +92,7 @@
 }
 
 
-.storytext {
+.textArea {
   height: 140px;
   margin: 20px 10px 10px 10px;
   column-count: 2;
@@ -116,10 +116,9 @@
   height: 40px;
   width: 140px;
   border: .5px solid black;
-  border-style: double;
   background-color: white ;
   font-family: Krungthep;
-  font-size: 1.1rem;
+  font-size: .9rem;
 }
 
 .spacertop {
