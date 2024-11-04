@@ -65,6 +65,7 @@ function startGame() {
 function goToTown() {
   console.log('Castle Town')
   cleanSlate();
+  
   const textDiv = document.createElement("div");
 
   const button1 = document.createElement('button')
@@ -163,7 +164,7 @@ function goToCastle() {
   button3.setAttribute('id', 'btn3');
   textDiv.setAttribute('id', 'textDiv');
 
-  textDiv.innerHTML = "Welcome to the castle. Go see the King!";
+  textDiv.innerHTML = "Welcome to the castle. Go to the throne room!";
   
   const textArea = document.querySelector(".textArea");
   const buttonArea = document.querySelector('.buttonArea');
@@ -173,10 +174,48 @@ function goToCastle() {
   buttonArea.appendChild(button2);
   buttonArea.appendChild(button3);
 
-  button1.onclick = startGame;
-  button2.onclick = goToCastle;
+  button1.onclick = goToTown;
+  button2.onclick = goToThroneRoom;
   button3.onclick = goToTavern;
   
+}
+
+function goToThroneRoom() {
+  console.log('Throne Room');
+  cleanSlate();
+
+  const textDiv = document.createElement("div");
+
+  const button1 = document.createElement('button')
+  const button2 = document.createElement('button')
+  const button3 = document.createElement('button')
+  
+
+  button1.innerHTML = 'Go to town';
+  button2.innerHTML = 'Back to Castle';
+  button3.innerHTML = 'Go to Tavern';
+
+  button1.setAttribute('class', 'button');
+  button2.setAttribute('class', 'button');
+  button3.setAttribute('class', 'button');
+  button1.setAttribute('id', 'btn1');
+  button2.setAttribute('id', 'btn2');
+  button3.setAttribute('id', 'btn3');
+  textDiv.setAttribute('id', 'textDiv');
+
+  textDiv.innerHTML = "A guard comes up to you and tells you that the king has been abducted by a giant dragon. He asks you to please help them save the King";
+  
+  const textArea = document.querySelector(".textArea");
+  const buttonArea = document.querySelector('.buttonArea');
+
+  textArea.appendChild(textDiv);
+  buttonArea.appendChild(button1);
+  buttonArea.appendChild(button2);
+  buttonArea.appendChild(button3);
+
+  button1.onclick = goToTown;
+  button2.onclick = goToCastle;
+  button3.onclick = goToTavern;
 }
 
 function goToTavern() {
