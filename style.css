@@ -73,21 +73,40 @@
   margin: 0px 20px 0px 20px;
 }
 
-.gamecontent {
+.location {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 30px;
+  padding: 1px 0;
+  margin: 1px 0 0 0;
+  border-bottom: 1px solid #111;
+  background-color: #f0f0f0;
+  box-shadow: inset 1px -3px 0px -2px #a8a9b6;
+}
+
+.location::before {
+  padding-left:5px;
+  background-image:linear-gradient(to right, #030303 2px transparent 1px), linear-gradient(#ccc 1px, transparent 1px);
+  background-size: 20px 30px;
 }
 
 
-.gamebuttons {
-  height: 100px;
+.storytext {
+  height: 140px;
+  margin: 20px 10px 10px 10px;
+  column-count: 2;
+  font-size: 1.1rem;
+}
+
+
+.buttonArea{
+  height: 80px;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  align-content: flex-end;
+  gap: 50px;
   border: .5px solid black;
   border-style: double;
   background-color: white ;
@@ -95,11 +114,12 @@
 
 .button {
   height: 40px;
-  width: 80px;
+  width: 140px;
   border: .5px solid black;
   border-style: double;
   background-color: white ;
   font-family: Krungthep;
+  font-size: 1.1rem;
 }
 
 .spacertop {
