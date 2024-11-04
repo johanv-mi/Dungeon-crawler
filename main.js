@@ -11,7 +11,7 @@ function main() {
   const button1 = document.querySelector('#btn1');
   const button2 = document.querySelector('#btn2');
   const button3 = document.querySelector('#btn3');
- 
+
 
 function helloWorld() {
   console.log('Hello World');
@@ -25,7 +25,11 @@ function cleanSlate(){
   textDiv.remove();
 }
 
+
 function startGame() {
+
+  const location = document.querySelector('.location');
+  location.innerHTML = 'Castle Town';
   
   const textDiv = document.createElement("div");
 
@@ -66,6 +70,9 @@ function goToTown() {
   console.log('Castle Town')
   cleanSlate();
   
+  const location = document.querySelector('.location');
+  location.innerHTML = 'Castle Town';
+
   const textDiv = document.createElement("div");
 
   const button1 = document.createElement('button')
@@ -106,6 +113,8 @@ function goToTown() {
 function goToBlacksmith() {
   console.log('Blacksmith');
   cleanSlate();
+  const location = document.querySelector('.location');
+  location.innerHTML = 'Blacksmith';
 
   const textDiv = document.createElement("div");
 
@@ -145,6 +154,9 @@ function goToCastle() {
   console.log('Castle');
   cleanSlate();
 
+  const location = document.querySelector('.location');
+  location.innerHTML = 'Castle';
+
   const textDiv = document.createElement("div");
 
   const button1 = document.createElement('button')
@@ -153,7 +165,7 @@ function goToCastle() {
   
 
   button1.innerHTML = 'Go to town';
-  button2.innerHTML = 'See the king';
+  button2.innerHTML = 'Go to throne room';
   button3.innerHTML = 'Go to Tavern';
 
   button1.setAttribute('class', 'button');
@@ -183,6 +195,8 @@ function goToCastle() {
 function goToThroneRoom() {
   console.log('Throne Room');
   cleanSlate();
+  const location = document.querySelector('.location');
+  location.innerHTML = 'Throne room';
 
   const textDiv = document.createElement("div");
 
@@ -220,5 +234,42 @@ function goToThroneRoom() {
 
 function goToTavern() {
   console.log('Tavern');
+  cleanSlate();
+
+  const location = document.querySelector('.location');
+  location.innerHTML = 'Tavern';
+
+  const textDiv = document.createElement("div");
+
+  const button1 = document.createElement('button')
+  const button2 = document.createElement('button')
+  const button3 = document.createElement('button')
+  
+
+  button1.innerHTML = 'Go to town';
+  button2.innerHTML = 'Go to Castle';
+  button3.innerHTML = 'Go to Forest';
+
+  button1.setAttribute('class', 'button');
+  button2.setAttribute('class', 'button');
+  button3.setAttribute('class', 'button');
+  button1.setAttribute('id', 'btn1');
+  button2.setAttribute('id', 'btn2');
+  button3.setAttribute('id', 'btn3');
+  textDiv.setAttribute('id', 'textDiv');
+
+  textDiv.innerHTML = "A lady at the bar tells you that she saw the dragon fly off towards the forest";
+  
+  const textArea = document.querySelector(".textArea");
+  const buttonArea = document.querySelector('.buttonArea');
+
+  textArea.appendChild(textDiv);
+  buttonArea.appendChild(button1);
+  buttonArea.appendChild(button2);
+  buttonArea.appendChild(button3);
+
+  button1.onclick = goToTown;
+  button2.onclick = goToCastle;
+  button3.onclick = goToForest;
   
 }
