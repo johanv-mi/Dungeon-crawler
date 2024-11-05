@@ -46,7 +46,6 @@
   border-radius: 15px;
   border: 1px solid black;
   background-color: black;
-  
 }
 
 .program {
@@ -60,6 +59,8 @@
 }
 
 .content {
+  display: flex;
+  flex-direction: column;
   height: 365px;
   width: 590px;
   font-family: Krungthep;
@@ -85,40 +86,40 @@
   box-shadow: inset 1px -3px 0px -2px #a8a9b6;
 }
 
-.location::before {
-  padding-left:5px;
-  background-image:linear-gradient(to right, #030303 2px transparent 1px), linear-gradient(#ccc 1px, transparent 1px);
-  background-size: 20px 30px;
-}
-
-
 .textArea {
-  height: 140px;
+  height: 70px;
+  max-width: 570px;
   margin: 20px 10px 10px 10px;
-  column-count: 2;
   font-size: 1.1rem;
 }
 
+.image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+}
 
-.buttonArea{
-  height: 80px;
+.buttonArea {
+  height: 60px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-top: auto;
   gap: 50px;
-  border: .5px solid black;
+  border: 0.5px solid black;
   border-style: double;
-  background-color: white ;
+  background-color: white;
 }
 
 .button {
   height: 40px;
   width: 140px;
-  border: .5px solid black;
-  background-color: white ;
+  border: 0.5px solid black;
+  background-color: white;
   font-family: Krungthep;
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 
 .spacertop {
@@ -179,6 +180,6 @@
   width: 870px;
   border: 2px solid black;
   background-color: #d7ccaa;
-  border-radius: 0px 0px 15px 15px ;
+  border-radius: 0px 0px 15px 15px;
   box-shadow: 0 40px 90px -35px rgba(10, 20, 10, 10);
 }
