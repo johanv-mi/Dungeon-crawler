@@ -15,11 +15,14 @@ function helloWorld() {
   console.log('Hello World');
 }
 
-/**This function removes the buttons and text */
+/**This function removes the buttons and text by looping through every button
+ * in the array of buttons it recieves from querySelectorAll.
+ */
 function cleanSlate() {
-  btn1.remove();
-  btn2.remove();
-  btn3.remove();
+  let buttons = document.querySelectorAll('button');
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].remove();
+  }
   textDiv.remove();
 }
 
@@ -37,6 +40,16 @@ function buttonCreator() {
   button3.setAttribute('id', 'btn3');
 
   return [button1, button2, button3];
+}
+
+function buySword() {
+  const weaponWindow = document.querySelector('.wpn');
+  weaponWindow.innerHTML = '[SWORD]';
+}
+
+function buyAxe() {
+  const weaponWindow = document.querySelector('.wpn');
+  weaponWindow.innerHTML = '[AXE]';
 }
 
 function startGame() {
@@ -95,6 +108,7 @@ function goToTown() {
   const buttonArea = document.querySelector('.buttonArea');
 
   textArea.appendChild(textDiv);
+
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
   buttonArea.appendChild(button3);
@@ -112,12 +126,15 @@ function goToBlacksmith() {
   location.innerHTML = 'Blacksmith';
 
   const [button1, button2, button3] = buttonCreator();
+  const [button4, button5] = buttonCreator();
 
   const textDiv = document.createElement('div');
 
   button1.innerHTML = 'Go to town';
   button2.innerHTML = 'Go to Castle';
   button3.innerHTML = 'Go to Tavern';
+  button4.innerHTML = 'Buy sword';
+  button5.innerHTML = 'Buy axe';
 
   textDiv.setAttribute('id', 'textDiv');
 
@@ -128,6 +145,8 @@ function goToBlacksmith() {
   const buttonArea = document.querySelector('.buttonArea');
 
   textArea.appendChild(textDiv);
+  textArea.appendChild(button4);
+  textArea.appendChild(button5);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
   buttonArea.appendChild(button3);
@@ -135,6 +154,8 @@ function goToBlacksmith() {
   button1.onclick = goToTown;
   button2.onclick = goToCastle;
   button3.onclick = goToTavern;
+  button4.onclick = buySword;
+  button5.onclick = buyAxe;
 }
 
 function goToCastle() {
