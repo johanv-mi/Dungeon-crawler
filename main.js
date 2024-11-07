@@ -2,19 +2,18 @@ window.addEventListener('DOMContentLoaded', main);
 
 function main() {
   console.log('Allt redo');
+  console.log(newButtonCreator(6));
   startButton.onclick = startGame;
 }
 
 const inventory = [];
-
-const button1 = document.querySelector('#btn1');
-const button2 = document.querySelector('#btn2');
-const button3 = document.querySelector('#btn3');
+const health = 100;
 
 function helloWorld() {
   console.log('Hello World');
 }
 
+function inventoryTracker() {}
 /**This function removes the buttons and text by looping through every button
  * in the array of buttons it recieves from querySelectorAll.
  */
@@ -42,31 +41,55 @@ function buttonCreator() {
   return [button1, button2, button3];
 }
 
+/**This function creates a specific number of buttons with different number id's
+ * and then puts them in an array.
+ */
+function newButtonCreator(numberOfButtons) {
+  const newButtons = [];
+
+  for (let i = 0; i < numberOfButtons; i++) {
+    const button = document.createElement('button');
+    button.setAttribute('class', 'button');
+    button.setAttribute('id', 'button' + i);
+    newButtons.push(button);
+  }
+  return newButtons;
+}
+
 function buySword() {
   const weaponWindow = document.querySelector('.wpn');
-  weaponWindow.innerHTML = '[SWORD]';
+  weaponWindow.innerText = '[SWORD]';
 }
 
 function buyAxe() {
   const weaponWindow = document.querySelector('.wpn');
-  weaponWindow.innerHTML = '[AXE]';
+  weaponWindow.innerText = '[AXE]';
+}
+
+function buyBeer() {
+  console.log('Beer');
+  textDiv.remove();
+  const textDiv = document.createElement('div');
+  const textArea = document.querySelector('.textArea');
+  textArea.appendChild(textDiv);
+  textDiv.innerText = 'You feel extremely ready to fight a dragon.';
 }
 
 function startGame() {
   const location = document.querySelector('.location');
-  location.innerHTML = 'Castle Town';
+  location.innerText = 'Castle Town';
 
   const textDiv = document.createElement('div');
 
   const [button1, button2, button3] = buttonCreator();
 
-  button1.innerHTML = 'Go to blacksmith';
-  button2.innerHTML = 'Go to Castle';
-  button3.innerHTML = 'Go to Tavern';
+  button1.innerText = 'Go to blacksmith';
+  button2.innerText = 'Go to Castle';
+  button3.innerText = 'Go to Tavern';
 
   textDiv.setAttribute('id', 'textDiv');
 
-  textDiv.innerHTML =
+  textDiv.innerText =
     'Welcome to the game. You are currently in the Castle Town. Please feel free to look around.';
 
   const textArea = document.querySelector('.textArea');
@@ -88,30 +111,33 @@ function goToTown() {
   console.log('Castle Town');
   cleanSlate();
 
-  const location = document.querySelector('.location');
-  location.innerHTML = 'Castle Town';
+  const buttonArray = newButtonCreator(3);
 
-  const textDiv = document.createElement('div');
+  const button1 = buttonArray[0];
+  const button2 = buttonArray[1];
+  const button3 = buttonArray[2];
 
-  const [button1, button2, button3] = buttonCreator();
+  button1.innerText = 'Go to blacksmith';
+  button2.innerText = 'Go to Castle';
+  button3.innerText = 'Go to Tavern';
 
-  button1.innerHTML = 'Go to blacksmith';
-  button2.innerHTML = 'Go to Castle';
-  button3.innerHTML = 'Go to Tavern';
-
-  textDiv.setAttribute('id', 'textDiv');
-
-  textDiv.innerHTML =
-    'You are currently in the Castle Town. Please feel free to look around.';
-
-  const textArea = document.querySelector('.textArea');
   const buttonArea = document.querySelector('.buttonArea');
-
-  textArea.appendChild(textDiv);
-
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
   buttonArea.appendChild(button3);
+
+  const location = document.querySelector('.location');
+  location.innerText = 'Castle Town';
+
+  const textDiv = document.createElement('div');
+  const textArea = document.querySelector('.textArea');
+
+  textDiv.setAttribute('id', 'textDiv');
+
+  textDiv.innerText =
+    'You are currently in the Castle Town. Please feel free to look around.';
+
+  textArea.appendChild(textDiv);
 
   button1.onclick = goToBlacksmith;
   button2.onclick = goToCastle;
@@ -123,22 +149,22 @@ function goToBlacksmith() {
   cleanSlate();
 
   const location = document.querySelector('.location');
-  location.innerHTML = 'Blacksmith';
+  location.innerText = 'Blacksmith';
 
   const [button1, button2, button3] = buttonCreator();
   const [button4, button5] = buttonCreator();
 
   const textDiv = document.createElement('div');
 
-  button1.innerHTML = 'Go to town';
-  button2.innerHTML = 'Go to Castle';
-  button3.innerHTML = 'Go to Tavern';
-  button4.innerHTML = 'Buy sword';
-  button5.innerHTML = 'Buy axe';
+  button1.innerText = 'Go to town';
+  button2.innerText = 'Go to Castle';
+  button3.innerText = 'Go to Tavern';
+  button4.innerText = 'Buy sword';
+  button5.innerText = 'Buy axe';
 
   textDiv.setAttribute('id', 'textDiv');
 
-  textDiv.innerHTML =
+  textDiv.innerText =
     'Your are at the blacksmith. Would you like to purchase a weapon?';
 
   const textArea = document.querySelector('.textArea');
@@ -163,19 +189,19 @@ function goToCastle() {
   cleanSlate();
 
   const location = document.querySelector('.location');
-  location.innerHTML = 'Castle';
+  location.innerText = 'Castle';
 
   const [button1, button2, button3] = buttonCreator();
 
   const textDiv = document.createElement('div');
 
-  button1.innerHTML = 'Go to town';
-  button2.innerHTML = 'Go to throne room';
-  button3.innerHTML = 'Go to Tavern';
+  button1.innerText = 'Go to town';
+  button2.innerText = 'Go to throne room';
+  button3.innerText = 'Go to Tavern';
 
   textDiv.setAttribute('id', 'textDiv');
 
-  textDiv.innerHTML = 'Welcome to the castle. Go to the throne room!';
+  textDiv.innerText = 'Welcome to the castle. Go to the throne room!';
 
   const textArea = document.querySelector('.textArea');
   const buttonArea = document.querySelector('.buttonArea');
@@ -194,19 +220,19 @@ function goToThroneRoom() {
   console.log('Throne Room');
   cleanSlate();
   const location = document.querySelector('.location');
-  location.innerHTML = 'Throne room';
+  location.innerText = 'Throne room';
 
   const [button1, button2, button3] = buttonCreator();
 
   const textDiv = document.createElement('div');
 
-  button1.innerHTML = 'Go to town';
-  button2.innerHTML = 'Back to Castle';
-  button3.innerHTML = 'Go to Tavern';
+  button1.innerText = 'Go to town';
+  button2.innerText = 'Back to Castle';
+  button3.innerText = 'Go to Tavern';
 
   textDiv.setAttribute('id', 'textDiv');
 
-  textDiv.innerHTML =
+  textDiv.innerText =
     'A guard comes up to you and tells you that the king has been abducted by a giant dragon. He asks you to please help them save the King';
 
   const textArea = document.querySelector('.textArea');
@@ -227,25 +253,30 @@ function goToTavern() {
   cleanSlate();
 
   const location = document.querySelector('.location');
-  location.innerHTML = 'Tavern';
+  location.innerText = 'Tavern';
 
   const [button1, button2, button3] = buttonCreator();
+  const [button4, button5] = buttonCreator();
 
   const textDiv = document.createElement('div');
 
-  button1.innerHTML = 'Go to town';
-  button2.innerHTML = 'Go to Castle';
-  button3.innerHTML = 'Go to Forest';
+  button1.innerText = 'Go to town';
+  button2.innerText = 'Go to Castle';
+  button3.innerText = 'Go to Forest';
+  button4.innerText = 'Buy a potion';
+  button5.innerText = 'Buy a beer';
 
   textDiv.setAttribute('id', 'textDiv');
 
-  textDiv.innerHTML =
-    'A lady at the bar tells you that she saw the dragon fly off towards the forest';
+  textDiv.innerText =
+    'A lady at the bar tells you that she saw the dragon fly off towards the forest.\nIn the back of the Tavern is a door that leads to the forest path.\n Be careful though!';
 
   const textArea = document.querySelector('.textArea');
   const buttonArea = document.querySelector('.buttonArea');
 
   textArea.appendChild(textDiv);
+  textArea.appendChild(button4);
+  textArea.appendChild(button5);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
   buttonArea.appendChild(button3);
@@ -253,4 +284,6 @@ function goToTavern() {
   button1.onclick = goToTown;
   button2.onclick = goToCastle;
   button3.onclick = goToForest;
+  button4.onclick = buyPotion;
+  button5.onclick = buyBeer;
 }
