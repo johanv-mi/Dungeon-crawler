@@ -74,6 +74,14 @@
   margin: 0px 20px 0px 20px;
 }
 
+.hlth {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 15px;
+  align-items: center;
+}
+
 .location {
   display: flex;
   justify-content: center;
