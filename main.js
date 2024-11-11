@@ -4,6 +4,7 @@ function main() {
   console.log('Allt redo');
   console.log(newButtonCreator(6));
   startButton.onclick = startGame;
+  loadStats();
 }
 
 let inventory = [];
@@ -14,6 +15,19 @@ let gold = 0;
 
 function helloWorld() {
   console.log('Hello World');
+}
+
+function loadStats() {
+  const weaponWindow = document.querySelector('.wpn');
+  const savedWeapon = localStorage.getItem('weapon');
+  const savedHealth = localStorage.getItem('health');
+  const savedGold = localStorage.getItem('gold');
+  const savedInventory = localStorage.getItem('inventory');
+
+  inventory = JSON.parse(savedInventory);
+  gold = JSON.parse(savedGold);
+  health = JSON.parse(savedHealth);
+  weaponWindow.innerText = savedWeapon;
 }
 
 /**Generates a random number between 1 and 9 */
@@ -86,6 +100,7 @@ function newButtonCreator(numberOfButtons) {
 function buySword() {
   const weaponWindow = document.querySelector('.wpn');
   weaponWindow.innerText = '[SWORD]';
+  localStorage.setItem('weapon', '[SWORD]');
 }
 /** This function adds an axe to the weapon slot. The axe is
  * slower but more powerful than the sword.
@@ -93,6 +108,7 @@ function buySword() {
 function buyAxe() {
   const weaponWindow = document.querySelector('.wpn');
   weaponWindow.innerText = '[AXE]';
+  localStorage.setItem('weapon', '[AXE]');
 }
 
 function buyBeer() {
@@ -110,6 +126,7 @@ function buyPotion() {
     gold -= 30;
     coin.innerText = gold;
     inventoryArea.innerText = inventory;
+    localStorage.setItem('inventory', JSON.stringify(inventory));
   }
 }
 /** This is the function for fighting goblins. It uses the random number generator
@@ -148,6 +165,7 @@ function useWeapon() {
       health -= 20;
       textDiv.innerText = 'Miss! The Goblin counterattacks.';
       healthCounter.innerText = health;
+      localStorage.setItem('playerHealth', JSON.stringify(health));
     }
   } else if (wpn.innerText == '[AXE]') {
     if (randomNumber < 6) {
@@ -158,6 +176,7 @@ function useWeapon() {
       health -= 20;
       textDiv.innerText = 'Miss! The Goblin counterattacks.';
       healthCounter.innerText = health;
+      localStorage.setItem('playerHealth', JSON.stringify(health));
     }
   }
 
@@ -170,6 +189,7 @@ function useWeapon() {
     goblinKillScreen();
     gold += 30;
     coin.innerText = gold;
+    localStorage.setItem('gold', JSON.stringify(gold));
   }
 }
 /** This is the dragon fighting function. It works just like the goblin one
@@ -207,6 +227,7 @@ function useWeaponTwo() {
       health -= 30;
       textDiv.innerText = 'Miss! The Dragon counterattacks.';
       healthCounter.innerText = health;
+      localStorage.setItem('playerHealth', JSON.stringify(health));
     }
   } else if (wpn.innerText == '[AXE]') {
     if (randomNumber < 6) {
@@ -217,6 +238,7 @@ function useWeaponTwo() {
       health -= 30;
       textDiv.innerText = 'Miss! The Dragon counterattacks.';
       healthCounter.innerText = health;
+      localStorage.setItem('playerHealth', JSON.stringify(health));
     }
   }
 
@@ -227,9 +249,10 @@ function useWeaponTwo() {
 
   if (dragonHealth <= 0) {
     dragonKillScreen();
-    playerCoins += 300;
+    gold += 300;
     let coin = document.querySelector('#money');
-    coin.innerText = playerCoins;
+    coin.innerText = gold;
+    localStorage.setItem('gold', JSON.stringify(gold));
   }
 }
 /** This function pops a potion form the inventory and adds 30 health. */
@@ -242,6 +265,7 @@ function usePotion() {
     inventory.pop();
     inventoryArea.innerText = inventory;
     healthCounter.innerText = health;
+    localStorage.setItem('playerHealth', JSON.stringify(health));
   }
 }
 
