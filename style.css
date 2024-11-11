@@ -82,6 +82,21 @@
   align-items: center;
 }
 
+.coin {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 15px;
+  align-items: center;
+}
+.hlth {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 15px;
+  align-items: center;
+}
+
 .location {
   display: flex;
   justify-content: center;

@@ -6,11 +6,11 @@ function main() {
   startButton.onclick = startGame;
 }
 
-const inventory = [];
+let inventory = [];
 let health = 100;
 let goblinHealth = 250;
-const dragonHealth = 500;
-const gold = 0;
+let dragonHealth = 500;
+let gold = 0;
 
 function helloWorld() {
   console.log('Hello World');
@@ -22,7 +22,6 @@ function randomNumberGenerator() {
   return randomNumber;
 }
 
-function inventoryTracker() {}
 /**This function removes the buttons and text by looping through every button
  * in the array of buttons it recieves from querySelectorAll.
  */
@@ -32,6 +31,23 @@ function cleanSlate() {
     buttons[i].remove();
   }
   textDiv.remove();
+}
+
+/**Resets the stats. */
+function resetStats() {
+  let healthCounter = document.querySelector('#health');
+  let coin = document.querySelector('#money');
+  let weaponWindow = document.querySelector('.wpn');
+  let inventoryArea = document.querySelector('.inventory');
+
+  health = 100;
+  gold = 0;
+  inventory = [];
+
+  healthCounter.innerText = health;
+  weaponWindow.innerText = '[]';
+  coin.innerText = gold;
+  inventoryArea.innerText = inventory;
 }
 
 /**This function creates three buttons and sets class and id for each */
@@ -64,17 +80,41 @@ function newButtonCreator(numberOfButtons) {
   }
   return newButtons;
 }
-
+/** This function adds a sword to the weapon slot. The sword is
+ * quicker but weaker than the axe.
+ */
 function buySword() {
   const weaponWindow = document.querySelector('.wpn');
   weaponWindow.innerText = '[SWORD]';
 }
-
+/** This function adds an axe to the weapon slot. The axe is
+ * slower but more powerful than the sword.
+ */
 function buyAxe() {
   const weaponWindow = document.querySelector('.wpn');
   weaponWindow.innerText = '[AXE]';
 }
 
+function buyBeer() {
+  const weaponWindow = document.querySelector('.wpn');
+  weaponWindow.innerText = '[BEER]';
+}
+/**This function lets you buy a potion if you have at least 30 gold
+ * and when used it adds 30 health.
+ */
+function buyPotion() {
+  let coin = document.querySelector('#money');
+  let inventoryArea = document.querySelector('.inventory');
+  if (gold >= 30) {
+    inventory.push('[P]');
+    gold -= 30;
+    coin.innerText = gold;
+    inventoryArea.innerText = inventory;
+  }
+}
+/** This is the function for fighting goblins. It uses the random number generator
+ * to calculate hits and misses.
+ */
 function useWeapon() {
   console.log('Fight!');
   let textArea = document.querySelector('.textArea');
@@ -82,6 +122,7 @@ function useWeapon() {
   let wpn = document.querySelector('.wpn');
   let healthCounter = document.querySelector('#health');
   let oldTextDiv = document.getElementById('textDiv');
+  let coin = document.querySelector('#money');
 
   if (oldTextDiv) {
     oldTextDiv.remove();
@@ -127,28 +168,128 @@ function useWeapon() {
 
   if (goblinHealth <= 0) {
     goblinKillScreen();
+    gold += 30;
+    coin.innerText = gold;
+  }
+}
+/** This is the dragon fighting function. It works just like the goblin one
+ * but the dragon has more health and stronger attacks.
+ */
+function useWeaponTwo() {
+  console.log('Fight!');
+  let textArea = document.querySelector('.textArea');
+  let randomNumber = randomNumberGenerator();
+  let wpn = document.querySelector('.wpn');
+  let healthCounter = document.querySelector('#health');
+  let oldTextDiv = document.getElementById('textDiv');
+
+  if (oldTextDiv) {
+    oldTextDiv.remove();
+  }
+
+  const textDiv = document.createElement('div');
+  textDiv.setAttribute('id', 'textDiv');
+
+  if (wpn.innerText == '[SWORD]') {
+    if (randomNumber == 1) {
+      console.log(' Crit Hit');
+      dragonHealth -= 40;
+      textDiv.innerText =
+        'Critical hit with your sword! Dragon takes a lot of damage. Dragon health: ' +
+        dragonHealth;
+    } else if (randomNumber < 8) {
+      console.log('Hit');
+      dragonHealth -= 20;
+      textDiv.innerText =
+        'Quick hit with your sword! Dragon health: ' + dragonHealth;
+    } else {
+      console.log('Miss');
+      health -= 30;
+      textDiv.innerText = 'Miss! The Dragon counterattacks.';
+      healthCounter.innerText = health;
+    }
+  } else if (wpn.innerText == '[AXE]') {
+    if (randomNumber < 6) {
+      dragonHealth -= 45;
+      textDiv.innerText = 'Heavy blow! Dragon health: ' + dragonHealth;
+    } else {
+      console.log('Miss');
+      health -= 30;
+      textDiv.innerText = 'Miss! The Dragon counterattacks.';
+      healthCounter.innerText = health;
+    }
+  }
+
+  textArea.appendChild(textDiv);
+  if (health <= 0) {
+    killScreen();
+  }
+
+  if (dragonHealth <= 0) {
+    dragonKillScreen();
+    playerCoins += 300;
+    let coin = document.querySelector('#money');
+    coin.innerText = playerCoins;
+  }
+}
+/** This function pops a potion form the inventory and adds 30 health. */
+function usePotion() {
+  let inventoryArea = document.querySelector('.inventory');
+  let healthCounter = document.querySelector('#health');
+
+  if (inventory.length >= 1) {
+    health += 30;
+    inventory.pop();
+    inventoryArea.innerText = inventory;
+    healthCounter.innerText = health;
   }
 }
 
-function usePotion() {
-  health += 30;
-}
-
-function buyBeer() {
-  const weaponWindow = document.querySelector('.wpn');
-  weaponWindow.innerText = '[BEER]';
-}
-
+/**Random encounter feature that decides of you'll fight a goblin */
 function randomEncounter() {
   const encounter = randomNumberGenerator();
   if (encounter > 5) {
     fightGoblin();
   } else goToDeepForest();
 }
+/** By using a random number and a switch statement you get
+ * one of six texts to make it less boring walking through the
+ * deep forest waiting for a random encounter.
+ */
+function getDeepForestText() {
+  let counter = randomNumberGenerator();
+  let deepForestText;
+
+  switch (counter) {
+    case 1:
+      deepForestText = '"Wow, it sure is dark in this forest."';
+      break;
+    case 2:
+      deepForestText =
+        '"I wonder if I will run in to any goblins in this forest?"';
+      break;
+    case 3:
+      deepForestText =
+        '"If I find some gold I can buy potions and go fight the dragon."';
+      break;
+    case 4:
+      deepForestText =
+        'The forest is dark and mysterious and you feel like someone or something is watching you';
+      break;
+    case 5:
+      deepForestText =
+        'If you get low on health from fighting monsters you can buy potions to replenish 30 health at the Tavern.';
+      break;
+    default:
+      deepForestText = 'You keep walking through the deep, dense forest.';
+  }
+
+  return deepForestText;
+}
 
 function startGame() {
   const location = document.querySelector('.location');
-  location.innerText = 'Castle Town';
+  location.innerText = '- Castle Town -';
 
   const textDiv = document.createElement('div');
 
@@ -181,9 +322,6 @@ function startGame() {
 function goToTown() {
   console.log('Castle Town');
   cleanSlate();
-  let healthCounter = document.querySelector('#health');
-  health = 100;
-  healthCounter.innerText = health;
   const buttonArray = newButtonCreator(3);
 
   const button1 = buttonArray[0];
@@ -200,7 +338,7 @@ function goToTown() {
   buttonArea.appendChild(button3);
 
   const location = document.querySelector('.location');
-  location.innerText = 'Castle Town';
+  location.innerText = '- Castle Town -';
 
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
@@ -222,7 +360,7 @@ function goToBlacksmith() {
   cleanSlate();
 
   const location = document.querySelector('.location');
-  location.innerText = 'Blacksmith';
+  location.innerText = '- Blacksmith -';
 
   const buttonArray = newButtonCreator(5);
   const button1 = buttonArray[0];
@@ -264,7 +402,7 @@ function goToCastle() {
   cleanSlate();
 
   const location = document.querySelector('.location');
-  location.innerText = 'Castle';
+  location.innerText = '- Castle -';
 
   const buttonArray = newButtonCreator(3);
 
@@ -298,7 +436,7 @@ function goToThroneRoom() {
   console.log('Throne Room');
   cleanSlate();
   const location = document.querySelector('.location');
-  location.innerText = 'Throne room';
+  location.innerText = '- Throne room -';
 
   const buttonArray = newButtonCreator(3);
 
@@ -377,7 +515,7 @@ function goToForest() {
   console.log('Forest');
   cleanSlate();
   const location = document.querySelector('.location');
-  location.innerText = 'Forest';
+  location.innerText = '- Forest -';
 
   const buttonArray = newButtonCreator(3);
 
@@ -413,8 +551,8 @@ function goToDeepForest() {
   console.log('Deep Forest');
   cleanSlate();
   const location = document.querySelector('.location');
-  location.innerText = 'Deep Forest';
-
+  location.innerText = '- Deep Forest -';
+  let deepForestText = getDeepForestText();
   const buttonArray = newButtonCreator(2);
 
   const button1 = buttonArray[0];
@@ -432,7 +570,7 @@ function goToDeepForest() {
 
   textDiv.setAttribute('id', 'textDiv');
 
-  textDiv.innerText = 'It is really dark in here';
+  textDiv.innerText = deepForestText;
 
   textArea.appendChild(textDiv);
 
@@ -440,6 +578,40 @@ function goToDeepForest() {
   button2.onclick = randomEncounter;
 }
 
+function goToMountain() {
+  console.log('Mountain');
+  cleanSlate();
+  const location = document.querySelector('.location');
+  location.innerText = '- Mountain -';
+
+  const buttonArray = newButtonCreator(2);
+
+  const button1 = buttonArray[0];
+  const button2 = buttonArray[1];
+
+  button1.innerText = 'Go back to forest';
+  button2.innerText = "Go to dragon's lair";
+
+  const buttonArea = document.querySelector('.buttonArea');
+  buttonArea.appendChild(button1);
+  buttonArea.appendChild(button2);
+
+  const textDiv = document.createElement('div');
+  const textArea = document.querySelector('.textArea');
+
+  textDiv.setAttribute('id', 'textDiv');
+
+  textDiv.innerText =
+    'The view is great from here! \n There is a sign by the road that reads:\n Caution. Dragon ahead. Bring potions';
+
+  textArea.appendChild(textDiv);
+
+  button1.onclick = goToForest;
+  button2.onclick = dragonChecker;
+}
+/** This is the scene for when you are fighting the goblin,
+ * not actually the fighting mechanics.
+ */
 function fightGoblin() {
   console.log('Battle with goblin');
   cleanSlate();
@@ -473,11 +645,49 @@ function fightGoblin() {
   button2.onclick = usePotion;
   button3.onclick = goToForest;
 }
+/** This is the scene for when you are fighting the dragon,
+ * not actually the fighting mechanics.
+ */
+function fightDragon() {
+  console.log('Battle with Dragon');
+  cleanSlate();
 
+  const location = document.querySelector('.location');
+  location.innerText = 'Battle with dragon';
+
+  const buttonArray = newButtonCreator(3);
+
+  const button1 = buttonArray[0];
+  const button2 = buttonArray[1];
+  const button3 = buttonArray[2];
+
+  button1.innerText = 'Fight';
+  button2.innerText = 'Use potion';
+  button3.innerText = 'Run';
+
+  const buttonArea = document.querySelector('.buttonArea');
+  const textDiv = document.createElement('div');
+  const textArea = document.querySelector('.textArea');
+  textDiv.setAttribute('id', 'textDiv');
+
+  textArea.appendChild(textDiv);
+  buttonArea.appendChild(button1);
+  buttonArea.appendChild(button2);
+  buttonArea.appendChild(button3);
+
+  textDiv.innerHTML =
+    'You found the giant dragon that abducted the king. Kill it and save the king!';
+
+  button1.onclick = useWeaponTwo;
+  button2.onclick = usePotion;
+  button3.onclick = goToMountain;
+}
+/** This is the scene for when the goblin has been killed.
+ * It resets the goblin health counter for the next fight.
+ */
 function goblinKillScreen() {
   console.log('Killed goblin');
   cleanSlate();
-
   const location = document.querySelector('.location');
   location.innerText = 'You slayed the goblin!';
 
@@ -498,18 +708,22 @@ function goblinKillScreen() {
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
 
-  textDiv.innerText = 'You encounter a goblin in the deep forest';
+  textDiv.innerText =
+    'The goblin dropped 30 pieces of gold. You put the gold in your pouch';
 
   button1.onclick = goToForest;
   button2.onclick = goToDeepForest;
 
   goblinHealth = 250;
 }
-
+/** This is the function for when the player dies.
+ * It resets the gold counter to zero and then plops you
+ * down in the castle town again.
+ */
 function killScreen() {
   console.log('Wasted');
   cleanSlate();
-  let healthCounter = document.querySelector('#health');
+  gold = 0;
   const location = document.querySelector('.location');
   location.innerText = 'Wasted';
 
@@ -519,6 +733,7 @@ function killScreen() {
 
   button1.innerText = 'Start over';
 
+  let coin = document.querySelector('#money');
   const buttonArea = document.querySelector('.buttonArea');
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
@@ -527,7 +742,85 @@ function killScreen() {
   textArea.appendChild(textDiv);
   buttonArea.appendChild(button1);
 
-  textDiv.innerText = 'You have unfortunately been killed';
+  textDiv.innerText =
+    'You have unfortunately been killed and your gold was stolen.';
+  coin.innerText = gold;
 
   button1.onclick = goToTown;
+  resetStats();
+}
+/**This is the scene that sets up the fight with the dragon
+ * and explains the required amount of potions needed to
+ * actually engage in the fight.
+ */
+function dragonInfo() {
+  console.log('Dragon checker');
+  cleanSlate();
+  const location = document.querySelector('.location');
+  location.innerText = '- Mountain -';
+
+  const buttonArray = newButtonCreator(2);
+
+  const button1 = buttonArray[0];
+  const button2 = buttonArray[1];
+
+  button1.innerText = 'Go back to forest';
+  button2.innerText = "Go to dragon's lair";
+
+  const buttonArea = document.querySelector('.buttonArea');
+  buttonArea.appendChild(button1);
+  buttonArea.appendChild(button2);
+
+  const textDiv = document.createElement('div');
+  const textArea = document.querySelector('.textArea');
+
+  textDiv.setAttribute('id', 'textDiv');
+
+  textDiv.innerText =
+    'You need at least THREE potions to defeat the dragon. The tavern sells them';
+  textArea.appendChild(textDiv);
+
+  button1.onclick = goToForest;
+  button2.onclick = dragonChecker;
+}
+/** This function checks if the player has
+ * enough potions to fight the dragon.
+ */
+function dragonChecker() {
+  if (inventory.length > 2) {
+    fightDragon();
+  } else {
+    dragonInfo();
+  }
+}
+/** End of the game scene. The dragon has been slayed
+ * and all the stats are reset.
+ */
+function dragonKillScreen() {
+  console.log('Win!');
+  cleanSlate();
+  const location = document.querySelector('.location');
+  location.innerText = 'Castle';
+
+  const buttonArray = newButtonCreator(1);
+
+  const button1 = buttonArray[0];
+
+  button1.innerText = 'Start over';
+
+  const buttonArea = document.querySelector('.buttonArea');
+  buttonArea.appendChild(button1);
+
+  const textDiv = document.createElement('div');
+  const textArea = document.querySelector('.textArea');
+
+  textDiv.setAttribute('id', 'textDiv');
+
+  textDiv.innerText =
+    'A winner is you!! \n You killed the dragon and saved the king.\n Good job and thank you for playing';
+
+  textArea.appendChild(textDiv);
+
+  button1.onclick = goToTown();
+  resetStats();
 }
