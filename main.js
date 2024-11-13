@@ -13,7 +13,7 @@ inventory = [];
 let health = 100;
 let goblinHealth = 150;
 let dragonHealth = 300;
-let gold = 0;
+let gold = 200;
 
 function helloWorld() {
   console.log('Hello World');
@@ -31,6 +31,8 @@ function randomNumberGenerator() {
 function cleanSlate() {
   let buttons = document.querySelectorAll('button');
   let imageDiv = document.querySelector('#imageDiv');
+  let optionButtons = document.querySelector('#optionButtons');
+
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].remove();
   }
@@ -38,6 +40,10 @@ function cleanSlate() {
 
   if (imageDiv) {
     imageDiv.remove();
+  }
+
+  if (optionButtons) {
+    optionButtons.remove();
   }
 }
 
@@ -98,7 +104,7 @@ function buyPotion() {
   let coin = document.querySelector('#money');
   let inventoryArea = document.querySelector('.inventory');
 
-  if (gold >= 30) {
+  if (gold >= 30 && inventory.length <= 4) {
     inventory.push('[P]');
     gold -= 30;
     coin.innerText = gold;
@@ -304,10 +310,11 @@ function startGame() {
     'Welcome to the game. You are currently in the Castle Town. Please feel free to look around.';
 
   const textArea = document.querySelector('.textArea');
+  const imageArea = document.querySelector('.imageArea');
   const buttonArea = document.querySelector('.buttonArea');
 
   textArea.appendChild(textDiv);
-  textArea.appendChild(imageDiv);
+  imageArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
   buttonArea.appendChild(button3);
@@ -377,6 +384,7 @@ function goToTown() {
 
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
+  const imageArea = document.querySelector('.imageArea');
 
   textDiv.setAttribute('id', 'textDiv');
 
@@ -384,7 +392,7 @@ function goToTown() {
     'You are currently in the Castle Town. Please feel free to look around.';
 
   textArea.appendChild(textDiv);
-  textArea.appendChild(imageDiv);
+  imageArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
   buttonArea.appendChild(button3);
@@ -416,16 +424,20 @@ function goToBlacksmith() {
   button5.innerText = 'Buy axe';
 
   const textDiv = document.createElement('div');
+  const optionButtons = document.createElement('div');
   const buttonArea = document.querySelector('.buttonArea');
   const textArea = document.querySelector('.textArea');
+  const imageArea = document.querySelector('.imageArea');
   textDiv.setAttribute('id', 'textDiv');
+  optionButtons.setAttribute('id', 'optionButtons');
   imageDiv.setAttribute('id', 'imageDiv');
   imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
 
   textArea.appendChild(textDiv);
-  textArea.appendChild(button4);
-  textArea.appendChild(button5);
-  textArea.appendChild(imageDiv);
+  textArea.appendChild(optionButtons);
+  optionButtons.appendChild(button4);
+  optionButtons.appendChild(button5);
+  imageArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
   buttonArea.appendChild(button3);
@@ -461,12 +473,13 @@ function goToCastle() {
 
   textDiv.setAttribute('id', 'textDiv');
   const buttonArea = document.querySelector('.buttonArea');
+  const imageArea = document.querySelector('.imageArea');
   imageDiv.setAttribute('id', 'imageDiv');
   imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
 
   const textArea = document.querySelector('.textArea');
   textArea.appendChild(textDiv);
-  textArea.appendChild(imageDiv);
+  imageArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
   buttonArea.appendChild(button3);
@@ -501,10 +514,11 @@ function goToThroneRoom() {
   imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
+  const imageArea = document.querySelector('.imageArea');
 
   textDiv.setAttribute('id', 'textDiv');
 
-  textArea.appendChild(imageDiv);
+  imageArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
   buttonArea.appendChild(button3);
@@ -526,32 +540,32 @@ function goToTavern() {
   const location = document.querySelector('.location');
   location.innerText = 'Tavern';
 
-  const buttonArray = newButtonCreator(5);
+  const buttonArray = newButtonCreator(4);
 
   const imageDiv = document.createElement('div');
+  const optionButtons = document.createElement('div');
   const button1 = buttonArray[0];
   const button2 = buttonArray[1];
   const button3 = buttonArray[2];
   const button4 = buttonArray[3];
-  const button5 = buttonArray[4];
 
   button1.innerText = 'Go to town';
   button2.innerText = 'Go to Castle';
   button3.innerText = 'Go to Forest';
   button4.innerText = 'Buy a potion';
-  button5.innerText = 'Buy a beer';
 
   const buttonArea = document.querySelector('.buttonArea');
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
+  const imageArea = document.querySelector('.imageArea');
   textDiv.setAttribute('id', 'textDiv');
   imageDiv.setAttribute('id', 'imageDiv');
   imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
 
   textArea.appendChild(textDiv);
-  textArea.appendChild(button4);
-  textArea.appendChild(button5);
-  textArea.appendChild(imageDiv);
+  textArea.appendChild(optionButtons);
+  optionButtons.appendChild(button4);
+  imageArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
   buttonArea.appendChild(button3);
@@ -563,7 +577,6 @@ function goToTavern() {
   button2.onclick = goToCastle;
   button3.onclick = goToForest;
   button4.onclick = buyPotion;
-  button5.onclick = buyBeer;
 }
 
 function goToForest() {
@@ -588,10 +601,11 @@ function goToForest() {
   imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
+  const imageArea = document.querySelector('.imageArea');
 
   textDiv.setAttribute('id', 'textDiv');
 
-  textArea.appendChild(imageDiv);
+  imageArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
   buttonArea.appendChild(button3);
@@ -626,8 +640,9 @@ function goToDeepForest() {
   imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
+  const imageArea = document.querySelector('.imageArea');
 
-  textArea.appendChild(imageDiv);
+  imageArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
 
@@ -661,11 +676,12 @@ function goToMountain() {
   imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
+  const imageArea = document.querySelector('.imageArea');
 
   textDiv.setAttribute('id', 'textDiv');
 
   textArea.appendChild(textDiv);
-  textArea.appendChild(imageDiv);
+  imageArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
 
@@ -703,8 +719,9 @@ function fightGoblin() {
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
   textDiv.setAttribute('id', 'textDiv');
+  const imageArea = document.querySelector('.imageArea');
 
-  textArea.appendChild(imageDiv);
+  imageArea.appendChild(imageDiv);
   textArea.appendChild(textDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
@@ -740,12 +757,13 @@ function fightDragon() {
   const buttonArea = document.querySelector('.buttonArea');
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
+  const imageArea = document.querySelector('.imageArea');
   textDiv.setAttribute('id', 'textDiv');
   imageDiv.setAttribute('id', 'imageDiv');
   imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
 
   textArea.appendChild(textDiv);
-  textArea.appendChild(imageDiv);
+  imageArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
   buttonArea.appendChild(button3);
@@ -778,12 +796,13 @@ function goblinKillScreen() {
   const buttonArea = document.querySelector('.buttonArea');
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
+  const imageArea = document.querySelector('.imageArea');
   imageDiv.setAttribute('id', 'imageDiv');
   imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
   textDiv.setAttribute('id', 'textDiv');
 
   textArea.appendChild(textDiv);
-  textArea.appendChild(imageDiv);
+  imageArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
 
@@ -817,12 +836,13 @@ function killScreen() {
   const buttonArea = document.querySelector('.buttonArea');
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
+  const imageArea = document.querySelector('.imageArea');
   textDiv.setAttribute('id', 'textDiv');
   imageDiv.setAttribute('id', 'imageDiv');
   imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
 
   textArea.appendChild(textDiv);
-  textArea.appendChild(imageDiv);
+  imageArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
 
   textDiv.innerText =
@@ -853,6 +873,9 @@ function dragonInfo() {
 
   imageDiv.setAttribute('id', 'imageDiv');
   imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
+  const textDiv = document.createElement('div');
+  const textArea = document.querySelector('.textArea');
+  const imageArea = document.querySelector('.imageArea');
 
   textDiv.setAttribute('id', 'textDiv');
 
@@ -862,12 +885,9 @@ function dragonInfo() {
 
   const buttonArea = document.querySelector('.buttonArea');
 
-  textArea.appendChild(imageDiv);
+  imageArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
-
-  const textDiv = document.createElement('div');
-  const textArea = document.querySelector('.textArea');
 
   button1.onclick = goToForest;
   button2.onclick = dragonChecker;
@@ -893,26 +913,25 @@ function dragonKillScreen() {
 
   const buttonArray = newButtonCreator(1);
   const imageDiv = document.createElement('div');
+  imageDiv.setAttribute('id', 'imageDiv');
 
   const button1 = buttonArray[0];
 
   button1.innerText = 'Start over';
-  imageDiv.setAttribute('id', 'imageDiv');
   imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
 
   const buttonArea = document.querySelector('.buttonArea');
+  const textDiv = document.createElement('div');
+  const textArea = document.querySelector('.textArea');
+  const imageArea = document.querySelector('.imageArea');
   textDiv.setAttribute('id', 'textDiv');
 
   textDiv.innerText =
     'A winner is you!! \n You killed the dragon and saved the king.\n Good job and thank you for playing';
 
-  textArea.appendChild(imageDiv);
+  imageArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
   textArea.appendChild(textDiv);
 
-  const textDiv = document.createElement('div');
-  const textArea = document.querySelector('.textArea');
-
-  button1.onclick = goToTown();
-  resetStats();
+  button1.onclick = goToTown;
 }

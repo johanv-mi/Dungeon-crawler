@@ -72,6 +72,7 @@
   flex-direction: row;
   justify-content: space-between;
   margin: 0px 20px 0px 20px;
+  font-size: 24px;
 }
 
 .hlth {
@@ -83,13 +84,6 @@
 }
 
 .coin {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 15px;
-  align-items: center;
-}
-.hlth {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -109,11 +103,25 @@
   box-shadow: inset 1px -3px 0px -2px #a8a9b6;
 }
 
-.textArea {
+.information {
   display: flex;
   flex-direction: row;
+}
+
+.textArea {
+  display: flex;
+  flex-direction: column;
   height: 70px;
-  max-width: 570px;
+  max-width: 280px;
+  margin: 10px 10px 10px 10px;
+  font-size: 1.1rem;
+}
+
+.imageArea {
+  display: flex;
+  flex-direction: column;
+  height: 70px;
+  max-width: 280px;
   margin: 10px 10px 10px 10px;
   font-size: 1.1rem;
 }
@@ -121,15 +129,20 @@
 #imageDiv {
   height: 70px;
   max-width: 260px;
-  margin: 20px 10px 10px 10px;
+  margin: 0px 10px 10px 10px;
   font-size: 1.1rem;
 }
 
 #textDiv {
-  height: 70px;
+  display: flex;
+  flex-direction: column;
+  height: 200px;
   max-width: 260px;
-  margin: 20px 10px 10px 10px;
+  margin: 0px 10px 10px 10px;
   font-size: 1.1rem;
+}
+
+#optionButtons {
 }
 
 .buttonArea {
