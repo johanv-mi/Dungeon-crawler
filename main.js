@@ -4,30 +4,16 @@ function main() {
   console.log('Allt redo');
   console.log(newButtonCreator(6));
   startButton.onclick = startGame;
-  loadStats();
 }
 
-let inventory = [];
-let health = 100;
-let goblinHealth = 250;
-let dragonHealth = 500;
+inventory = [];
+let health;
+let goblinHealth = 150;
+let dragonHealth = 300;
 let gold = 0;
 
 function helloWorld() {
   console.log('Hello World');
-}
-
-function loadStats() {
-  const weaponWindow = document.querySelector('.wpn');
-  const savedWeapon = localStorage.getItem('weapon');
-  const savedHealth = localStorage.getItem('health');
-  const savedGold = localStorage.getItem('gold');
-  const savedInventory = localStorage.getItem('inventory');
-
-  inventory = JSON.parse(savedInventory);
-  gold = JSON.parse(savedGold);
-  health = JSON.parse(savedHealth);
-  weaponWindow.innerText = savedWeapon;
 }
 
 /**Generates a random number between 1 and 9 */
@@ -64,22 +50,6 @@ function resetStats() {
   inventoryArea.innerText = inventory;
 }
 
-/**This function creates three buttons and sets class and id for each */
-function buttonCreator() {
-  const button1 = document.createElement('button');
-  const button2 = document.createElement('button');
-  const button3 = document.createElement('button');
-
-  button1.setAttribute('class', 'button');
-  button2.setAttribute('class', 'button');
-  button3.setAttribute('class', 'button');
-  button1.setAttribute('id', 'btn1');
-  button2.setAttribute('id', 'btn2');
-  button3.setAttribute('id', 'btn3');
-
-  return [button1, button2, button3];
-}
-
 /**This function creates a specific number of buttons with different number id's
  * and then puts them in an array.
  */
@@ -100,7 +70,6 @@ function newButtonCreator(numberOfButtons) {
 function buySword() {
   const weaponWindow = document.querySelector('.wpn');
   weaponWindow.innerText = '[SWORD]';
-  localStorage.setItem('weapon', '[SWORD]');
 }
 /** This function adds an axe to the weapon slot. The axe is
  * slower but more powerful than the sword.
@@ -108,7 +77,6 @@ function buySword() {
 function buyAxe() {
   const weaponWindow = document.querySelector('.wpn');
   weaponWindow.innerText = '[AXE]';
-  localStorage.setItem('weapon', '[AXE]');
 }
 
 function buyBeer() {
@@ -121,12 +89,12 @@ function buyBeer() {
 function buyPotion() {
   let coin = document.querySelector('#money');
   let inventoryArea = document.querySelector('.inventory');
+
   if (gold >= 30) {
     inventory.push('[P]');
     gold -= 30;
     coin.innerText = gold;
     inventoryArea.innerText = inventory;
-    localStorage.setItem('inventory', JSON.stringify(inventory));
   }
 }
 /** This is the function for fighting goblins. It uses the random number generator
@@ -165,7 +133,6 @@ function useWeapon() {
       health -= 20;
       textDiv.innerText = 'Miss! The Goblin counterattacks.';
       healthCounter.innerText = health;
-      localStorage.setItem('playerHealth', JSON.stringify(health));
     }
   } else if (wpn.innerText == '[AXE]') {
     if (randomNumber < 6) {
@@ -176,7 +143,6 @@ function useWeapon() {
       health -= 20;
       textDiv.innerText = 'Miss! The Goblin counterattacks.';
       healthCounter.innerText = health;
-      localStorage.setItem('playerHealth', JSON.stringify(health));
     }
   }
 
@@ -189,7 +155,6 @@ function useWeapon() {
     goblinKillScreen();
     gold += 30;
     coin.innerText = gold;
-    localStorage.setItem('gold', JSON.stringify(gold));
   }
 }
 /** This is the dragon fighting function. It works just like the goblin one
@@ -227,7 +192,6 @@ function useWeaponTwo() {
       health -= 30;
       textDiv.innerText = 'Miss! The Dragon counterattacks.';
       healthCounter.innerText = health;
-      localStorage.setItem('playerHealth', JSON.stringify(health));
     }
   } else if (wpn.innerText == '[AXE]') {
     if (randomNumber < 6) {
@@ -238,7 +202,6 @@ function useWeaponTwo() {
       health -= 30;
       textDiv.innerText = 'Miss! The Dragon counterattacks.';
       healthCounter.innerText = health;
-      localStorage.setItem('playerHealth', JSON.stringify(health));
     }
   }
 
@@ -252,7 +215,6 @@ function useWeaponTwo() {
     gold += 300;
     let coin = document.querySelector('#money');
     coin.innerText = gold;
-    localStorage.setItem('gold', JSON.stringify(gold));
   }
 }
 /** This function pops a potion form the inventory and adds 30 health. */
@@ -263,10 +225,9 @@ function usePotion() {
   if (inventory.length >= 1) {
     health += 30;
     inventory.pop();
-    inventoryArea.innerText = inventory;
-    healthCounter.innerText = health;
-    localStorage.setItem('playerHealth', JSON.stringify(health));
   }
+  healthCounter.innerText = health;
+  inventoryArea.innerText = inventory;
 }
 
 /**Random encounter feature that decides of you'll fight a goblin */
@@ -312,10 +273,14 @@ function getDeepForestText() {
 }
 
 function startGame() {
+  startButton.remove();
+  continueButton.remove();
   const location = document.querySelector('.location');
   location.innerText = '- Castle Town -';
-
   const textDiv = document.createElement('div');
+
+  health = 100;
+  let healthCounter = document.querySelector('#health');
 
   const [button1, button2, button3] = buttonCreator();
 
@@ -339,8 +304,43 @@ function startGame() {
   button1.onclick = goToBlacksmith;
   button2.onclick = goToCastle;
   button3.onclick = goToTavern;
+}
 
+function continueStartScene() {
+  console.log('Castle Town');
   startButton.remove();
+  continueButton.remove();
+  const buttonArray = newButtonCreator(3);
+
+  const button1 = buttonArray[0];
+  const button2 = buttonArray[1];
+  const button3 = buttonArray[2];
+
+  button1.innerText = 'Go to blacksmith';
+  button2.innerText = 'Go to Castle';
+  button3.innerText = 'Go to Tavern';
+
+  const buttonArea = document.querySelector('.buttonArea');
+  buttonArea.appendChild(button1);
+  buttonArea.appendChild(button2);
+  buttonArea.appendChild(button3);
+
+  const location = document.querySelector('.location');
+  location.innerText = '- Castle Town -';
+
+  const textDiv = document.createElement('div');
+  const textArea = document.querySelector('.textArea');
+
+  textDiv.setAttribute('id', 'textDiv');
+
+  textDiv.innerText =
+    'You are currently in the Castle Town. Please feel free to look around.';
+
+  textArea.appendChild(textDiv);
+
+  button1.onclick = goToBlacksmith;
+  button2.onclick = goToCastle;
+  button3.onclick = goToTavern;
 }
 
 function goToTown() {
@@ -738,7 +738,7 @@ function goblinKillScreen() {
   button1.onclick = goToForest;
   button2.onclick = goToDeepForest;
 
-  goblinHealth = 250;
+  goblinHealth = 150;
 }
 /** This is the function for when the player dies.
  * It resets the gold counter to zero and then plops you
