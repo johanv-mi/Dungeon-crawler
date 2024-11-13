@@ -2,7 +2,7 @@ window.addEventListener('DOMContentLoaded', main);
 
 function main() {
   console.log('Allt redo');
-  console.log(newButtonCreator(6));
+  console.log(getNewButton(6));
   startButton.onclick = startGame;
 }
 
@@ -20,7 +20,7 @@ function helloWorld() {
 }
 
 /**Generates a random number between 1 and 9 */
-function randomNumberGenerator() {
+function getRandomNumber() {
   const randomNumber = Math.floor(Math.random() * 10);
   return randomNumber;
 }
@@ -67,7 +67,7 @@ function resetStats() {
 /**This function creates a specific number of buttons with different number id's
  * and then puts them in an array.
  */
-function newButtonCreator(numberOfButtons) {
+function getNewButton(numberOfButtons) {
   const newButtons = [];
 
   for (let i = 0; i < numberOfButtons; i++) {
@@ -93,10 +93,6 @@ function buyAxe() {
   weaponWindow.innerText = '[AXE]';
 }
 
-function buyBeer() {
-  const weaponWindow = document.querySelector('.wpn');
-  weaponWindow.innerText = '[BEER]';
-}
 /**This function lets you buy a potion if you have at least 30 gold
  * and when used it adds 30 health.
  */
@@ -114,10 +110,10 @@ function buyPotion() {
 /** This is the function for fighting goblins. It uses the random number generator
  * to calculate hits and misses.
  */
-function useWeapon() {
+function fightGoblin() {
   console.log('Fight!');
   let textArea = document.querySelector('.textArea');
-  let randomNumber = randomNumberGenerator();
+  let randomNumber = getRandomNumber();
   let wpn = document.querySelector('.wpn');
   let healthCounter = document.querySelector('#health');
   let oldTextDiv = document.getElementById('textDiv');
@@ -174,10 +170,10 @@ function useWeapon() {
 /** This is the dragon fighting function. It works just like the goblin one
  * but the dragon has more health and stronger attacks.
  */
-function useWeaponTwo() {
+function fightDragon() {
   console.log('Fight!');
   let textArea = document.querySelector('.textArea');
-  let randomNumber = randomNumberGenerator();
+  let randomNumber = getRandomNumber();
   let wpn = document.querySelector('.wpn');
   let healthCounter = document.querySelector('#health');
   let oldTextDiv = document.getElementById('textDiv');
@@ -225,12 +221,258 @@ function useWeaponTwo() {
   }
 
   if (dragonHealth <= 0) {
-    dragonKillScreen();
+    winScreen();
     gold += 300;
     let coin = document.querySelector('#money');
     coin.innerText = gold;
   }
 }
+
+/** This is the scene for when you are fighting the goblin,
+ * not actually the fighting mechanics.
+ */
+function goToGoblin() {
+  console.log('Battle with goblin');
+  cleanSlate();
+
+  const imageDiv = document.createElement('div');
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'goblin.jpg'>";
+
+  const location = document.querySelector('.location');
+  location.innerText = 'Battle with goblin';
+
+  const buttonArray = getNewButton(3);
+
+  const button1 = buttonArray[0];
+  const button2 = buttonArray[1];
+  const button3 = buttonArray[2];
+
+  button1.innerText = 'Fight';
+  button2.innerText = 'Use potion';
+  button3.innerText = 'Run';
+
+  const buttonArea = document.querySelector('.buttonArea');
+  const textDiv = document.createElement('div');
+  const textArea = document.querySelector('.textArea');
+  textDiv.setAttribute('id', 'textDiv');
+  const imageArea = document.querySelector('.imageArea');
+
+  imageArea.appendChild(imageDiv);
+  textArea.appendChild(textDiv);
+  buttonArea.appendChild(button1);
+  buttonArea.appendChild(button2);
+  buttonArea.appendChild(button3);
+
+  textDiv.innerHTML = 'You encounter a goblin in the deep forest';
+
+  button1.onclick = fightGoblin;
+  button2.onclick = usePotion;
+  button3.onclick = goToForest;
+}
+/** This is the scene for when you are fighting the dragon,
+ * not actually the fighting mechanics.
+ */
+function goToDragon() {
+  console.log('Battle with Dragon');
+  cleanSlate();
+
+  const location = document.querySelector('.location');
+  location.innerText = 'Battle with dragon';
+
+  const buttonArray = getNewButton(3);
+
+  const imageDiv = document.createElement('div');
+  const button1 = buttonArray[0];
+  const button2 = buttonArray[1];
+  const button3 = buttonArray[2];
+
+  button1.innerText = 'Fight';
+  button2.innerText = 'Use potion';
+  button3.innerText = 'Run';
+
+  const buttonArea = document.querySelector('.buttonArea');
+  const textDiv = document.createElement('div');
+  const textArea = document.querySelector('.textArea');
+  const imageArea = document.querySelector('.imageArea');
+  textDiv.setAttribute('id', 'textDiv');
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'dragon.jpg'>";
+
+  textArea.appendChild(textDiv);
+  imageArea.appendChild(imageDiv);
+  buttonArea.appendChild(button1);
+  buttonArea.appendChild(button2);
+  buttonArea.appendChild(button3);
+
+  textDiv.innerHTML =
+    'You found the giant dragon that abducted the king. Kill it and save the king!';
+
+  button1.onclick = fightDragon;
+  button2.onclick = usePotion;
+  button3.onclick = goToMountain;
+}
+/** This is the scene for when the goblin has been killed.
+ * It resets the goblin health counter for the next fight.
+ */
+function goblinKillScreen() {
+  console.log('Killed goblin');
+  cleanSlate();
+  const location = document.querySelector('.location');
+  location.innerText = 'You slayed the goblin!';
+
+  const buttonArray = getNewButton(2);
+  const imageDiv = document.createElement('div');
+
+  const button1 = buttonArray[0];
+  const button2 = buttonArray[1];
+
+  button1.innerText = 'Go back to forest';
+  button2.innerText = 'Keep going deeper';
+
+  const buttonArea = document.querySelector('.buttonArea');
+  const textDiv = document.createElement('div');
+  const textArea = document.querySelector('.textArea');
+  const imageArea = document.querySelector('.imageArea');
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
+  textDiv.setAttribute('id', 'textDiv');
+
+  textArea.appendChild(textDiv);
+  imageArea.appendChild(imageDiv);
+  buttonArea.appendChild(button1);
+  buttonArea.appendChild(button2);
+
+  textDiv.innerText =
+    'The goblin dropped 30 pieces of gold. You put the gold in your pouch';
+
+  button1.onclick = goToForest;
+  button2.onclick = goToDeepForest;
+
+  goblinHealth = 150;
+}
+/** This is the function for when the player dies.
+ * It resets the gold counter to zero and then plops you
+ * down in the castle town again.
+ */
+function killScreen() {
+  console.log('Wasted');
+  cleanSlate();
+  gold = 0;
+  const location = document.querySelector('.location');
+  location.innerText = 'Wasted';
+
+  const buttonArray = getNewButton(2);
+  const imageDiv = document.createElement('div');
+
+  const button1 = buttonArray[0];
+
+  button1.innerText = 'Start over';
+
+  let coin = document.querySelector('#money');
+  const buttonArea = document.querySelector('.buttonArea');
+  const textDiv = document.createElement('div');
+  const textArea = document.querySelector('.textArea');
+  const imageArea = document.querySelector('.imageArea');
+  textDiv.setAttribute('id', 'textDiv');
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
+
+  textArea.appendChild(textDiv);
+  imageArea.appendChild(imageDiv);
+  buttonArea.appendChild(button1);
+
+  textDiv.innerText =
+    'You have unfortunately been killed and your gold was stolen.';
+  coin.innerText = gold;
+
+  button1.onclick = goToTown;
+  resetStats();
+}
+/**This is the scene that sets up the fight with the dragon
+ * and explains the required amount of potions needed to
+ * actually engage in the fight.
+ */
+function dragonInfo() {
+  console.log('Dragon checker');
+  cleanSlate();
+  const location = document.querySelector('.location');
+  location.innerText = '- Mountain -';
+
+  const buttonArray = getNewButton(2);
+  const imageDiv = document.createElement('div');
+
+  const button1 = buttonArray[0];
+  const button2 = buttonArray[1];
+
+  button1.innerText = 'Go back to forest';
+  button2.innerText = "Go to dragon's lair";
+
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
+  const textDiv = document.createElement('div');
+  const textArea = document.querySelector('.textArea');
+  const imageArea = document.querySelector('.imageArea');
+
+  textDiv.setAttribute('id', 'textDiv');
+
+  textDiv.innerText =
+    'You need at least THREE potions to defeat the dragon. The tavern sells them';
+  textArea.appendChild(textDiv);
+
+  const buttonArea = document.querySelector('.buttonArea');
+
+  imageArea.appendChild(imageDiv);
+  buttonArea.appendChild(button1);
+  buttonArea.appendChild(button2);
+
+  button1.onclick = goToForest;
+  button2.onclick = dragonChecker;
+}
+/** This function checks if the player has
+ * enough potions to fight the dragon.
+ */
+function dragonChecker() {
+  if (inventory.length > 2) {
+    goToDragon();
+  } else {
+    dragonInfo();
+  }
+}
+/** End of the game scene. The dragon has been slayed
+ * and all the stats are reset.
+ */
+function winScreen() {
+  console.log('Win!');
+  cleanSlate();
+  const location = document.querySelector('.location');
+  location.innerText = 'Back at the Castle';
+
+  const buttonArray = getNewButton(1);
+  const imageDiv = document.createElement('div');
+  imageDiv.setAttribute('id', 'imageDiv');
+
+  const button1 = buttonArray[0];
+
+  button1.innerText = 'Start over';
+  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
+
+  const buttonArea = document.querySelector('.buttonArea');
+  const textDiv = document.createElement('div');
+  const textArea = document.querySelector('.textArea');
+  const imageArea = document.querySelector('.imageArea');
+  textDiv.setAttribute('id', 'textDiv');
+
+  textDiv.innerText =
+    'A winner is you!! \n You killed the dragon and saved the king.\n Good job and thank you for playing';
+
+  imageArea.appendChild(imageDiv);
+  buttonArea.appendChild(button1);
+  textArea.appendChild(textDiv);
+
+  button1.onclick = goToTown;
+}
+
 /** This function pops a potion form the inventory and adds 30 health. */
 function usePotion() {
   let inventoryArea = document.querySelector('.inventory');
@@ -245,10 +487,10 @@ function usePotion() {
 }
 
 /**Random encounter feature that decides of you'll fight a goblin */
-function randomEncounter() {
-  const encounter = randomNumberGenerator();
+function getRandomEncounter() {
+  const encounter = getRandomNumber();
   if (encounter > 5) {
-    fightGoblin();
+    goToGoblin();
   } else goToDeepForest();
 }
 /** By using a random number and a switch statement you get
@@ -256,7 +498,7 @@ function randomEncounter() {
  * deep forest waiting for a random encounter.
  */
 function getDeepForestText() {
-  let counter = randomNumberGenerator();
+  let counter = getRandomNumber();
   let deepForestText;
 
   switch (counter) {
@@ -293,7 +535,7 @@ function startGame() {
   location.innerText = '- Castle Town -';
   const textDiv = document.createElement('div');
   const imageDiv = document.createElement('div');
-  const buttonArray = newButtonCreator(3);
+  const buttonArray = getNewButton(3);
 
   const button1 = buttonArray[0];
   const button2 = buttonArray[1];
@@ -328,7 +570,7 @@ function continueStartScene() {
   console.log('Castle Town');
   startButton.remove();
   continueButton.remove();
-  const buttonArray = newButtonCreator(3);
+  const buttonArray = getNewButton(3);
 
   const button1 = buttonArray[0];
   const button2 = buttonArray[1];
@@ -364,7 +606,7 @@ function continueStartScene() {
 function goToTown() {
   console.log('Castle Town');
   cleanSlate();
-  const buttonArray = newButtonCreator(3);
+  const buttonArray = getNewButton(3);
   const imageDiv = document.createElement('div');
   const button1 = buttonArray[0];
   const button2 = buttonArray[1];
@@ -409,7 +651,7 @@ function goToBlacksmith() {
   const location = document.querySelector('.location');
   location.innerText = '- Blacksmith -';
 
-  const buttonArray = newButtonCreator(5);
+  const buttonArray = getNewButton(5);
   const imageDiv = document.createElement('div');
   const button1 = buttonArray[0];
   const button2 = buttonArray[1];
@@ -431,7 +673,7 @@ function goToBlacksmith() {
   textDiv.setAttribute('id', 'textDiv');
   optionButtons.setAttribute('id', 'optionButtons');
   imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
+  imageDiv.innerHTML = "<img src= 'blacksmith.jpg'>";
 
   textArea.appendChild(textDiv);
   textArea.appendChild(optionButtons);
@@ -459,7 +701,7 @@ function goToCastle() {
   const location = document.querySelector('.location');
   location.innerText = '- Castle -';
 
-  const buttonArray = newButtonCreator(3);
+  const buttonArray = getNewButton(3);
 
   const textDiv = document.createElement('div');
   const imageDiv = document.createElement('div');
@@ -498,7 +740,7 @@ function goToThroneRoom() {
   const location = document.querySelector('.location');
   location.innerText = '- Throne room -';
 
-  const buttonArray = newButtonCreator(3);
+  const buttonArray = getNewButton(3);
 
   const imageDiv = document.createElement('div');
   const button1 = buttonArray[0];
@@ -511,7 +753,7 @@ function goToThroneRoom() {
 
   const buttonArea = document.querySelector('.buttonArea');
   imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
+  imageDiv.innerHTML = "<img src= 'throneroom.jpg'>";
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
   const imageArea = document.querySelector('.imageArea');
@@ -540,7 +782,7 @@ function goToTavern() {
   const location = document.querySelector('.location');
   location.innerText = 'Tavern';
 
-  const buttonArray = newButtonCreator(4);
+  const buttonArray = getNewButton(4);
 
   const imageDiv = document.createElement('div');
   const optionButtons = document.createElement('div');
@@ -585,7 +827,7 @@ function goToForest() {
   const location = document.querySelector('.location');
   location.innerText = '- Forest -';
 
-  const buttonArray = newButtonCreator(3);
+  const buttonArray = getNewButton(3);
 
   const imageDiv = document.createElement('div');
   const button1 = buttonArray[0];
@@ -598,7 +840,7 @@ function goToForest() {
 
   const buttonArea = document.querySelector('.buttonArea');
   imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
+  imageDiv.innerHTML = "<img src= 'forest.jpg'>";
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
   const imageArea = document.querySelector('.imageArea');
@@ -616,7 +858,7 @@ function goToForest() {
   textArea.appendChild(textDiv);
 
   button1.onclick = goToTown;
-  button2.onclick = randomEncounter;
+  button2.onclick = getRandomEncounter;
   button3.onclick = goToMountain;
 }
 
@@ -626,7 +868,7 @@ function goToDeepForest() {
   const location = document.querySelector('.location');
   location.innerText = '- Deep Forest -';
   let deepForestText = getDeepForestText();
-  const buttonArray = newButtonCreator(2);
+  const buttonArray = getNewButton(2);
 
   const imageDiv = document.createElement('div');
   const button1 = buttonArray[0];
@@ -653,7 +895,7 @@ function goToDeepForest() {
   textArea.appendChild(textDiv);
 
   button1.onclick = goToForest;
-  button2.onclick = randomEncounter;
+  button2.onclick = getRandomEncounter;
 }
 
 function goToMountain() {
@@ -662,7 +904,7 @@ function goToMountain() {
   const location = document.querySelector('.location');
   location.innerText = '- Mountain -';
 
-  const buttonArray = newButtonCreator(2);
+  const buttonArray = getNewButton(2);
 
   const imageDiv = document.createElement('div');
   const button1 = buttonArray[0];
@@ -673,7 +915,7 @@ function goToMountain() {
 
   const buttonArea = document.querySelector('.buttonArea');
   imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
+  imageDiv.innerHTML = "<img src= 'mountain.jpg'>";
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
   const imageArea = document.querySelector('.imageArea');
@@ -690,248 +932,4 @@ function goToMountain() {
 
   button1.onclick = goToForest;
   button2.onclick = dragonChecker;
-}
-/** This is the scene for when you are fighting the goblin,
- * not actually the fighting mechanics.
- */
-function fightGoblin() {
-  console.log('Battle with goblin');
-  cleanSlate();
-
-  const imageDiv = document.createElement('div');
-  imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'goblin.jpg'>";
-
-  const location = document.querySelector('.location');
-  location.innerText = 'Battle with goblin';
-
-  const buttonArray = newButtonCreator(3);
-
-  const button1 = buttonArray[0];
-  const button2 = buttonArray[1];
-  const button3 = buttonArray[2];
-
-  button1.innerText = 'Fight';
-  button2.innerText = 'Use potion';
-  button3.innerText = 'Run';
-
-  const buttonArea = document.querySelector('.buttonArea');
-  const textDiv = document.createElement('div');
-  const textArea = document.querySelector('.textArea');
-  textDiv.setAttribute('id', 'textDiv');
-  const imageArea = document.querySelector('.imageArea');
-
-  imageArea.appendChild(imageDiv);
-  textArea.appendChild(textDiv);
-  buttonArea.appendChild(button1);
-  buttonArea.appendChild(button2);
-  buttonArea.appendChild(button3);
-
-  textDiv.innerHTML = 'You encounter a goblin in the deep forest';
-
-  button1.onclick = useWeapon;
-  button2.onclick = usePotion;
-  button3.onclick = goToForest;
-}
-/** This is the scene for when you are fighting the dragon,
- * not actually the fighting mechanics.
- */
-function fightDragon() {
-  console.log('Battle with Dragon');
-  cleanSlate();
-
-  const location = document.querySelector('.location');
-  location.innerText = 'Battle with dragon';
-
-  const buttonArray = newButtonCreator(3);
-
-  const imageDiv = document.createElement('div');
-  const button1 = buttonArray[0];
-  const button2 = buttonArray[1];
-  const button3 = buttonArray[2];
-
-  button1.innerText = 'Fight';
-  button2.innerText = 'Use potion';
-  button3.innerText = 'Run';
-
-  const buttonArea = document.querySelector('.buttonArea');
-  const textDiv = document.createElement('div');
-  const textArea = document.querySelector('.textArea');
-  const imageArea = document.querySelector('.imageArea');
-  textDiv.setAttribute('id', 'textDiv');
-  imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
-
-  textArea.appendChild(textDiv);
-  imageArea.appendChild(imageDiv);
-  buttonArea.appendChild(button1);
-  buttonArea.appendChild(button2);
-  buttonArea.appendChild(button3);
-
-  textDiv.innerHTML =
-    'You found the giant dragon that abducted the king. Kill it and save the king!';
-
-  button1.onclick = useWeaponTwo;
-  button2.onclick = usePotion;
-  button3.onclick = goToMountain;
-}
-/** This is the scene for when the goblin has been killed.
- * It resets the goblin health counter for the next fight.
- */
-function goblinKillScreen() {
-  console.log('Killed goblin');
-  cleanSlate();
-  const location = document.querySelector('.location');
-  location.innerText = 'You slayed the goblin!';
-
-  const buttonArray = newButtonCreator(2);
-  const imageDiv = document.createElement('div');
-
-  const button1 = buttonArray[0];
-  const button2 = buttonArray[1];
-
-  button1.innerText = 'Go back to forest';
-  button2.innerText = 'Keep going deeper';
-
-  const buttonArea = document.querySelector('.buttonArea');
-  const textDiv = document.createElement('div');
-  const textArea = document.querySelector('.textArea');
-  const imageArea = document.querySelector('.imageArea');
-  imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
-  textDiv.setAttribute('id', 'textDiv');
-
-  textArea.appendChild(textDiv);
-  imageArea.appendChild(imageDiv);
-  buttonArea.appendChild(button1);
-  buttonArea.appendChild(button2);
-
-  textDiv.innerText =
-    'The goblin dropped 30 pieces of gold. You put the gold in your pouch';
-
-  button1.onclick = goToForest;
-  button2.onclick = goToDeepForest;
-
-  goblinHealth = 150;
-}
-/** This is the function for when the player dies.
- * It resets the gold counter to zero and then plops you
- * down in the castle town again.
- */
-function killScreen() {
-  console.log('Wasted');
-  cleanSlate();
-  gold = 0;
-  const location = document.querySelector('.location');
-  location.innerText = 'Wasted';
-
-  const buttonArray = newButtonCreator(2);
-  const imageDiv = document.createElement('div');
-
-  const button1 = buttonArray[0];
-
-  button1.innerText = 'Start over';
-
-  let coin = document.querySelector('#money');
-  const buttonArea = document.querySelector('.buttonArea');
-  const textDiv = document.createElement('div');
-  const textArea = document.querySelector('.textArea');
-  const imageArea = document.querySelector('.imageArea');
-  textDiv.setAttribute('id', 'textDiv');
-  imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
-
-  textArea.appendChild(textDiv);
-  imageArea.appendChild(imageDiv);
-  buttonArea.appendChild(button1);
-
-  textDiv.innerText =
-    'You have unfortunately been killed and your gold was stolen.';
-  coin.innerText = gold;
-
-  button1.onclick = goToTown;
-  resetStats();
-}
-/**This is the scene that sets up the fight with the dragon
- * and explains the required amount of potions needed to
- * actually engage in the fight.
- */
-function dragonInfo() {
-  console.log('Dragon checker');
-  cleanSlate();
-  const location = document.querySelector('.location');
-  location.innerText = '- Mountain -';
-
-  const buttonArray = newButtonCreator(2);
-  const imageDiv = document.createElement('div');
-
-  const button1 = buttonArray[0];
-  const button2 = buttonArray[1];
-
-  button1.innerText = 'Go back to forest';
-  button2.innerText = "Go to dragon's lair";
-
-  imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
-  const textDiv = document.createElement('div');
-  const textArea = document.querySelector('.textArea');
-  const imageArea = document.querySelector('.imageArea');
-
-  textDiv.setAttribute('id', 'textDiv');
-
-  textDiv.innerText =
-    'You need at least THREE potions to defeat the dragon. The tavern sells them';
-  textArea.appendChild(textDiv);
-
-  const buttonArea = document.querySelector('.buttonArea');
-
-  imageArea.appendChild(imageDiv);
-  buttonArea.appendChild(button1);
-  buttonArea.appendChild(button2);
-
-  button1.onclick = goToForest;
-  button2.onclick = dragonChecker;
-}
-/** This function checks if the player has
- * enough potions to fight the dragon.
- */
-function dragonChecker() {
-  if (inventory.length > 2) {
-    fightDragon();
-  } else {
-    dragonInfo();
-  }
-}
-/** End of the game scene. The dragon has been slayed
- * and all the stats are reset.
- */
-function dragonKillScreen() {
-  console.log('Win!');
-  cleanSlate();
-  const location = document.querySelector('.location');
-  location.innerText = 'Castle';
-
-  const buttonArray = newButtonCreator(1);
-  const imageDiv = document.createElement('div');
-  imageDiv.setAttribute('id', 'imageDiv');
-
-  const button1 = buttonArray[0];
-
-  button1.innerText = 'Start over';
-  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
-
-  const buttonArea = document.querySelector('.buttonArea');
-  const textDiv = document.createElement('div');
-  const textArea = document.querySelector('.textArea');
-  const imageArea = document.querySelector('.imageArea');
-  textDiv.setAttribute('id', 'textDiv');
-
-  textDiv.innerText =
-    'A winner is you!! \n You killed the dragon and saved the king.\n Good job and thank you for playing';
-
-  imageArea.appendChild(imageDiv);
-  buttonArea.appendChild(button1);
-  textArea.appendChild(textDiv);
-
-  button1.onclick = goToTown;
 }

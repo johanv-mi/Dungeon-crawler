@@ -139,10 +139,13 @@
   height: 200px;
   max-width: 260px;
   margin: 0px 10px 10px 10px;
-  font-size: 1.1rem;
+  font-size: 16px;
 }
 
 #optionButtons {
+  columns: 2;
+  column-gap: 40px;
+  margin-left: 10px;
 }
 
 .buttonArea {
