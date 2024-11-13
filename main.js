@@ -6,8 +6,11 @@ function main() {
   startButton.onclick = startGame;
 }
 
+const swordImg = document.createElement('img');
+swordImg.src = 'sword.jpg';
+
 inventory = [];
-let health;
+let health = 100;
 let goblinHealth = 150;
 let dragonHealth = 300;
 let gold = 0;
@@ -27,10 +30,15 @@ function randomNumberGenerator() {
  */
 function cleanSlate() {
   let buttons = document.querySelectorAll('button');
+  let imageDiv = document.querySelector('#imageDiv');
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].remove();
   }
   textDiv.remove();
+
+  if (imageDiv) {
+    imageDiv.remove();
+  }
 }
 
 /**Resets the stats. */
@@ -278,18 +286,20 @@ function startGame() {
   const location = document.querySelector('.location');
   location.innerText = '- Castle Town -';
   const textDiv = document.createElement('div');
+  const imageDiv = document.createElement('div');
+  const buttonArray = newButtonCreator(3);
 
-  health = 100;
-  let healthCounter = document.querySelector('#health');
-
-  const [button1, button2, button3] = buttonCreator();
+  const button1 = buttonArray[0];
+  const button2 = buttonArray[1];
+  const button3 = buttonArray[2];
 
   button1.innerText = 'Go to blacksmith';
   button2.innerText = 'Go to Castle';
   button3.innerText = 'Go to Tavern';
 
   textDiv.setAttribute('id', 'textDiv');
-
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'castle.jpg'>";
   textDiv.innerText =
     'Welcome to the game. You are currently in the Castle Town. Please feel free to look around.';
 
@@ -297,6 +307,7 @@ function startGame() {
   const buttonArea = document.querySelector('.buttonArea');
 
   textArea.appendChild(textDiv);
+  textArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
   buttonArea.appendChild(button3);
@@ -347,7 +358,7 @@ function goToTown() {
   console.log('Castle Town');
   cleanSlate();
   const buttonArray = newButtonCreator(3);
-
+  const imageDiv = document.createElement('div');
   const button1 = buttonArray[0];
   const button2 = buttonArray[1];
   const button3 = buttonArray[2];
@@ -356,10 +367,10 @@ function goToTown() {
   button2.innerText = 'Go to Castle';
   button3.innerText = 'Go to Tavern';
 
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
+
   const buttonArea = document.querySelector('.buttonArea');
-  buttonArea.appendChild(button1);
-  buttonArea.appendChild(button2);
-  buttonArea.appendChild(button3);
 
   const location = document.querySelector('.location');
   location.innerText = '- Castle Town -';
@@ -373,6 +384,10 @@ function goToTown() {
     'You are currently in the Castle Town. Please feel free to look around.';
 
   textArea.appendChild(textDiv);
+  textArea.appendChild(imageDiv);
+  buttonArea.appendChild(button1);
+  buttonArea.appendChild(button2);
+  buttonArea.appendChild(button3);
 
   button1.onclick = goToBlacksmith;
   button2.onclick = goToCastle;
@@ -387,6 +402,7 @@ function goToBlacksmith() {
   location.innerText = '- Blacksmith -';
 
   const buttonArray = newButtonCreator(5);
+  const imageDiv = document.createElement('div');
   const button1 = buttonArray[0];
   const button2 = buttonArray[1];
   const button3 = buttonArray[2];
@@ -403,16 +419,19 @@ function goToBlacksmith() {
   const buttonArea = document.querySelector('.buttonArea');
   const textArea = document.querySelector('.textArea');
   textDiv.setAttribute('id', 'textDiv');
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
 
   textArea.appendChild(textDiv);
   textArea.appendChild(button4);
   textArea.appendChild(button5);
+  textArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
   buttonArea.appendChild(button3);
 
   textDiv.innerText =
-    'Your are at the blacksmith. Would you like to purchase a weapon?';
+    'Welcome to the blacksmith. Since there has been goblin sightings you can have a weapon for free. The sword is more accurate but not as strong as the axe. ';
 
   button1.onclick = goToTown;
   button2.onclick = goToCastle;
@@ -430,6 +449,8 @@ function goToCastle() {
 
   const buttonArray = newButtonCreator(3);
 
+  const textDiv = document.createElement('div');
+  const imageDiv = document.createElement('div');
   const button1 = buttonArray[0];
   const button2 = buttonArray[1];
   const button3 = buttonArray[2];
@@ -438,7 +459,14 @@ function goToCastle() {
   button2.innerText = 'Go to throne room';
   button3.innerText = 'Go to Tavern';
 
+  textDiv.setAttribute('id', 'textDiv');
   const buttonArea = document.querySelector('.buttonArea');
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
+
+  const textArea = document.querySelector('.textArea');
+  textArea.appendChild(textDiv);
+  textArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
   buttonArea.appendChild(button3);
@@ -447,13 +475,8 @@ function goToCastle() {
   button2.onclick = goToThroneRoom;
   button3.onclick = goToTavern;
 
-  const textDiv = document.createElement('div');
-  textDiv.setAttribute('id', 'textDiv');
-
-  textDiv.innerText = 'Welcome to the castle. Go to the throne room!';
-
-  const textArea = document.querySelector('.textArea');
-  textArea.appendChild(textDiv);
+  textDiv.innerText =
+    'Welcome to the castle. The mighty halls are empty but you hear a sound coming from the throne room!';
 }
 
 function goToThroneRoom() {
@@ -464,6 +487,7 @@ function goToThroneRoom() {
 
   const buttonArray = newButtonCreator(3);
 
+  const imageDiv = document.createElement('div');
   const button1 = buttonArray[0];
   const button2 = buttonArray[1];
   const button3 = buttonArray[2];
@@ -473,17 +497,20 @@ function goToThroneRoom() {
   button3.innerText = 'Go to Tavern';
 
   const buttonArea = document.querySelector('.buttonArea');
-  buttonArea.appendChild(button1);
-  buttonArea.appendChild(button2);
-  buttonArea.appendChild(button3);
-
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
 
   textDiv.setAttribute('id', 'textDiv');
 
+  textArea.appendChild(imageDiv);
+  buttonArea.appendChild(button1);
+  buttonArea.appendChild(button2);
+  buttonArea.appendChild(button3);
+
   textDiv.innerText =
-    'A guard comes up to you and tells you that the king has been abducted by a giant dragon. He asks you to please help them save the King';
+    'A guard comes up to you and tells you that the king has been abducted by a giant dragon. He asks you to please help them save the King. Maybe somebody at the tavern knows more.';
 
   textArea.appendChild(textDiv);
 
@@ -501,6 +528,7 @@ function goToTavern() {
 
   const buttonArray = newButtonCreator(5);
 
+  const imageDiv = document.createElement('div');
   const button1 = buttonArray[0];
   const button2 = buttonArray[1];
   const button3 = buttonArray[2];
@@ -517,10 +545,13 @@ function goToTavern() {
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
   textDiv.setAttribute('id', 'textDiv');
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
 
   textArea.appendChild(textDiv);
   textArea.appendChild(button4);
   textArea.appendChild(button5);
+  textArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
   buttonArea.appendChild(button3);
@@ -543,6 +574,7 @@ function goToForest() {
 
   const buttonArray = newButtonCreator(3);
 
+  const imageDiv = document.createElement('div');
   const button1 = buttonArray[0];
   const button2 = buttonArray[1];
   const button3 = buttonArray[2];
@@ -552,14 +584,17 @@ function goToForest() {
   button3.innerText = 'To the mountain';
 
   const buttonArea = document.querySelector('.buttonArea');
-  buttonArea.appendChild(button1);
-  buttonArea.appendChild(button2);
-  buttonArea.appendChild(button3);
-
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
 
   textDiv.setAttribute('id', 'textDiv');
+
+  textArea.appendChild(imageDiv);
+  buttonArea.appendChild(button1);
+  buttonArea.appendChild(button2);
+  buttonArea.appendChild(button3);
 
   textDiv.innerText =
     'In the forest there are two diverging paths. One leads deeper into the forest and one leads to the mountain. In the deep forest there are goblins so you should get your weapon ready if you want to go that way. ';
@@ -579,6 +614,7 @@ function goToDeepForest() {
   let deepForestText = getDeepForestText();
   const buttonArray = newButtonCreator(2);
 
+  const imageDiv = document.createElement('div');
   const button1 = buttonArray[0];
   const button2 = buttonArray[1];
 
@@ -586,11 +622,14 @@ function goToDeepForest() {
   button2.innerText = 'Go even deeper';
 
   const buttonArea = document.querySelector('.buttonArea');
-  buttonArea.appendChild(button1);
-  buttonArea.appendChild(button2);
-
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
+
+  textArea.appendChild(imageDiv);
+  buttonArea.appendChild(button1);
+  buttonArea.appendChild(button2);
 
   textDiv.setAttribute('id', 'textDiv');
 
@@ -610,6 +649,7 @@ function goToMountain() {
 
   const buttonArray = newButtonCreator(2);
 
+  const imageDiv = document.createElement('div');
   const button1 = buttonArray[0];
   const button2 = buttonArray[1];
 
@@ -617,18 +657,20 @@ function goToMountain() {
   button2.innerText = "Go to dragon's lair";
 
   const buttonArea = document.querySelector('.buttonArea');
-  buttonArea.appendChild(button1);
-  buttonArea.appendChild(button2);
-
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
 
   textDiv.setAttribute('id', 'textDiv');
 
+  textArea.appendChild(textDiv);
+  textArea.appendChild(imageDiv);
+  buttonArea.appendChild(button1);
+  buttonArea.appendChild(button2);
+
   textDiv.innerText =
     'The view is great from here! \n There is a sign by the road that reads:\n Caution. Dragon ahead. Bring potions';
-
-  textArea.appendChild(textDiv);
 
   button1.onclick = goToForest;
   button2.onclick = dragonChecker;
@@ -639,6 +681,10 @@ function goToMountain() {
 function fightGoblin() {
   console.log('Battle with goblin');
   cleanSlate();
+
+  const imageDiv = document.createElement('div');
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'goblin.jpg'>";
 
   const location = document.querySelector('.location');
   location.innerText = 'Battle with goblin';
@@ -658,6 +704,7 @@ function fightGoblin() {
   const textArea = document.querySelector('.textArea');
   textDiv.setAttribute('id', 'textDiv');
 
+  textArea.appendChild(imageDiv);
   textArea.appendChild(textDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
@@ -681,6 +728,7 @@ function fightDragon() {
 
   const buttonArray = newButtonCreator(3);
 
+  const imageDiv = document.createElement('div');
   const button1 = buttonArray[0];
   const button2 = buttonArray[1];
   const button3 = buttonArray[2];
@@ -693,8 +741,11 @@ function fightDragon() {
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
   textDiv.setAttribute('id', 'textDiv');
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
 
   textArea.appendChild(textDiv);
+  textArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
   buttonArea.appendChild(button3);
@@ -716,6 +767,7 @@ function goblinKillScreen() {
   location.innerText = 'You slayed the goblin!';
 
   const buttonArray = newButtonCreator(2);
+  const imageDiv = document.createElement('div');
 
   const button1 = buttonArray[0];
   const button2 = buttonArray[1];
@@ -726,9 +778,12 @@ function goblinKillScreen() {
   const buttonArea = document.querySelector('.buttonArea');
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
   textDiv.setAttribute('id', 'textDiv');
 
   textArea.appendChild(textDiv);
+  textArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
   buttonArea.appendChild(button2);
 
@@ -752,6 +807,7 @@ function killScreen() {
   location.innerText = 'Wasted';
 
   const buttonArray = newButtonCreator(2);
+  const imageDiv = document.createElement('div');
 
   const button1 = buttonArray[0];
 
@@ -762,8 +818,11 @@ function killScreen() {
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
   textDiv.setAttribute('id', 'textDiv');
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
 
   textArea.appendChild(textDiv);
+  textArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
 
   textDiv.innerText =
@@ -784,6 +843,7 @@ function dragonInfo() {
   location.innerText = '- Mountain -';
 
   const buttonArray = newButtonCreator(2);
+  const imageDiv = document.createElement('div');
 
   const button1 = buttonArray[0];
   const button2 = buttonArray[1];
@@ -791,18 +851,23 @@ function dragonInfo() {
   button1.innerText = 'Go back to forest';
   button2.innerText = "Go to dragon's lair";
 
-  const buttonArea = document.querySelector('.buttonArea');
-  buttonArea.appendChild(button1);
-  buttonArea.appendChild(button2);
-
-  const textDiv = document.createElement('div');
-  const textArea = document.querySelector('.textArea');
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
 
   textDiv.setAttribute('id', 'textDiv');
 
   textDiv.innerText =
     'You need at least THREE potions to defeat the dragon. The tavern sells them';
   textArea.appendChild(textDiv);
+
+  const buttonArea = document.querySelector('.buttonArea');
+
+  textArea.appendChild(imageDiv);
+  buttonArea.appendChild(button1);
+  buttonArea.appendChild(button2);
+
+  const textDiv = document.createElement('div');
+  const textArea = document.querySelector('.textArea');
 
   button1.onclick = goToForest;
   button2.onclick = dragonChecker;
@@ -827,23 +892,26 @@ function dragonKillScreen() {
   location.innerText = 'Castle';
 
   const buttonArray = newButtonCreator(1);
+  const imageDiv = document.createElement('div');
 
   const button1 = buttonArray[0];
 
   button1.innerText = 'Start over';
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
 
   const buttonArea = document.querySelector('.buttonArea');
-  buttonArea.appendChild(button1);
-
-  const textDiv = document.createElement('div');
-  const textArea = document.querySelector('.textArea');
-
   textDiv.setAttribute('id', 'textDiv');
 
   textDiv.innerText =
     'A winner is you!! \n You killed the dragon and saved the king.\n Good job and thank you for playing';
 
+  textArea.appendChild(imageDiv);
+  buttonArea.appendChild(button1);
   textArea.appendChild(textDiv);
+
+  const textDiv = document.createElement('div');
+  const textArea = document.querySelector('.textArea');
 
   button1.onclick = goToTown();
   resetStats();

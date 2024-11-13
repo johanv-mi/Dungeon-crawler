@@ -110,17 +110,26 @@
 }
 
 .textArea {
+  display: flex;
+  flex-direction: row;
   height: 70px;
   max-width: 570px;
+  margin: 10px 10px 10px 10px;
+  font-size: 1.1rem;
+}
+
+#imageDiv {
+  height: 70px;
+  max-width: 260px;
   margin: 20px 10px 10px 10px;
   font-size: 1.1rem;
 }
 
-.image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 15px;
+#textDiv {
+  height: 70px;
+  max-width: 260px;
+  margin: 20px 10px 10px 10px;
+  font-size: 1.1rem;
 }
 
 .buttonArea {
