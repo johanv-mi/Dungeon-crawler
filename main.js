@@ -12,10 +12,6 @@ let goblinHealth = 120;
 let dragonHealth = 300;
 let gold = 0;
 
-function helloWorld() {
-  console.log('Hello World');
-}
-
 function saveStats(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
 }
