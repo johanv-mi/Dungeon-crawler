@@ -2,21 +2,89 @@ window.addEventListener('DOMContentLoaded', main);
 
 function main() {
   console.log('Allt redo');
-  console.log(getNewButton(6));
   startButton.onclick = startGame;
+  continueButton.onclick = continueStartScene;
 }
 
-const swordImg = document.createElement('img');
-swordImg.src = 'sword.jpg';
-
-inventory = [];
+let inventory = [];
 let health = 100;
-let goblinHealth = 150;
+let goblinHealth = 120;
 let dragonHealth = 300;
-let gold = 200;
+let gold = 0;
 
 function helloWorld() {
   console.log('Hello World');
+}
+
+function saveStats(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+/**This function checks if the stat exists, loads it from localstorage, and updates the UI on the screen. */
+function loadStats() {
+  const savedHealth = localStorage.getItem('health');
+  if (savedHealth) {
+    health = JSON.parse(savedHealth);
+    document.querySelector('#health').innerText = health;
+  }
+
+  const savedGold = localStorage.getItem('gold');
+  if (savedGold) {
+    gold = JSON.parse(savedGold);
+    document.querySelector('#money').innerText = gold;
+  }
+
+  const savedInventory = localStorage.getItem('inventory');
+  if (savedInventory) {
+    inventory = JSON.parse(savedInventory);
+    document.querySelector('.inventory').innerText = inventory;
+  }
+
+  const savedWeapon = localStorage.getItem('weapon');
+  if (savedWeapon) {
+    inventory = JSON.parse(savedWeapon);
+    document.querySelector('.wpn').innerText = inventory;
+  }
+}
+
+/**This function resets all stats, clears localstorage, and updates the UI */
+function resetStats() {
+  let healthCounter = document.querySelector('#health');
+  let coin = document.querySelector('#money');
+  let weaponWindow = document.querySelector('.wpn');
+  let inventoryArea = document.querySelector('.inventory');
+
+  health = 100;
+  gold = 0;
+  inventory = [];
+
+  healthCounter.innerText = health;
+  coin.innerText = gold;
+  weaponWindow.innerText = '[]';
+  inventoryArea.innerText = inventory;
+
+  localStorage.removeItem('health');
+  localStorage.removeItem('gold');
+  localStorage.removeItem('weapon');
+  localStorage.removeItem('inventory');
+}
+
+function updateHealth(newHealth) {
+  health = newHealth;
+  document.querySelector('#health').innerText = health;
+  saveStats('health', health);
+}
+
+function updateGold(newGold) {
+  gold = newGold;
+  document.querySelector('#money').innerText = gold;
+  saveStats('gold', gold);
+}
+
+function updateInventory(newInventory) {
+  inventory = newInventory;
+  document.querySelector('.inventory').innerText = inventory;
+  saveStats('inventory', inventory);
 }
 
 /**Generates a random number between 1 and 9 */
@@ -47,23 +115,6 @@ function cleanSlate() {
   }
 }
 
-/**Resets the stats. */
-function resetStats() {
-  let healthCounter = document.querySelector('#health');
-  let coin = document.querySelector('#money');
-  let weaponWindow = document.querySelector('.wpn');
-  let inventoryArea = document.querySelector('.inventory');
-
-  health = 100;
-  gold = 0;
-  inventory = [];
-
-  healthCounter.innerText = health;
-  weaponWindow.innerText = '[]';
-  coin.innerText = gold;
-  inventoryArea.innerText = inventory;
-}
-
 /**This function creates a specific number of buttons with different number id's
  * and then puts them in an array.
  */
@@ -84,6 +135,7 @@ function getNewButton(numberOfButtons) {
 function buySword() {
   const weaponWindow = document.querySelector('.wpn');
   weaponWindow.innerText = '[SWORD]';
+  saveStats('weapon', '[SWORD]');
 }
 /** This function adds an axe to the weapon slot. The axe is
  * slower but more powerful than the sword.
@@ -91,20 +143,18 @@ function buySword() {
 function buyAxe() {
   const weaponWindow = document.querySelector('.wpn');
   weaponWindow.innerText = '[AXE]';
+  saveStats('weapon', '[AXE]');
 }
 
 /**This function lets you buy a potion if you have at least 30 gold
  * and when used it adds 30 health.
  */
 function buyPotion() {
-  let coin = document.querySelector('#money');
-  let inventoryArea = document.querySelector('.inventory');
-
   if (gold >= 30 && inventory.length <= 4) {
-    inventory.push('[P]');
-    gold -= 30;
-    coin.innerText = gold;
-    inventoryArea.innerText = inventory;
+    let newInventory = [...inventory, '[P]'];
+    let newGold = gold - 30;
+    updateInventory(newInventory);
+    updateGold(newGold);
   }
 }
 /** This is the function for fighting goblins. It uses the random number generator
@@ -143,6 +193,7 @@ function fightGoblin() {
       health -= 20;
       textDiv.innerText = 'Miss! The Goblin counterattacks.';
       healthCounter.innerText = health;
+      saveStats('health', health);
     }
   } else if (wpn.innerText == '[AXE]') {
     if (randomNumber < 6) {
@@ -153,6 +204,7 @@ function fightGoblin() {
       health -= 20;
       textDiv.innerText = 'Miss! The Goblin counterattacks.';
       healthCounter.innerText = health;
+      saveStats('health', health);
     }
   }
 
@@ -165,6 +217,7 @@ function fightGoblin() {
     goblinKillScreen();
     gold += 30;
     coin.innerText = gold;
+    saveStats('gold', gold);
   }
 }
 /** This is the dragon fighting function. It works just like the goblin one
@@ -202,6 +255,7 @@ function fightDragon() {
       health -= 30;
       textDiv.innerText = 'Miss! The Dragon counterattacks.';
       healthCounter.innerText = health;
+      saveStats('health', health);
     }
   } else if (wpn.innerText == '[AXE]') {
     if (randomNumber < 6) {
@@ -212,6 +266,7 @@ function fightDragon() {
       health -= 30;
       textDiv.innerText = 'Miss! The Dragon counterattacks.';
       healthCounter.innerText = health;
+      saveStats('health', health);
     }
   }
 
@@ -225,6 +280,7 @@ function fightDragon() {
     gold += 300;
     let coin = document.querySelector('#money');
     coin.innerText = gold;
+    saveStats('gold', gold);
   }
 }
 
@@ -475,15 +531,13 @@ function winScreen() {
 
 /** This function pops a potion form the inventory and adds 30 health. */
 function usePotion() {
-  let inventoryArea = document.querySelector('.inventory');
-  let healthCounter = document.querySelector('#health');
-
   if (inventory.length >= 1) {
-    health += 30;
-    inventory.pop();
+    const newHealth = health + 30;
+    const newInventory = [...inventory];
+    newInventory.pop();
+    updateHealth(newHealth);
+    updateInventory(newInventory);
   }
-  healthCounter.innerText = health;
-  inventoryArea.innerText = inventory;
 }
 
 /**Random encounter feature that decides of you'll fight a goblin */
@@ -531,6 +585,7 @@ function getDeepForestText() {
 function startGame() {
   startButton.remove();
   continueButton.remove();
+  resetStats();
   const location = document.querySelector('.location');
   location.innerText = '- Castle Town -';
   const textDiv = document.createElement('div');
@@ -568,6 +623,7 @@ function startGame() {
 
 function continueStartScene() {
   console.log('Castle Town');
+  loadStats();
   startButton.remove();
   continueButton.remove();
   const buttonArray = getNewButton(3);
