@@ -469,7 +469,7 @@ function dragonInfo() {
   textDiv.setAttribute('id', 'textDiv');
 
   textDiv.innerText =
-    'You need at least THREE potions to defeat the dragon. The tavern sells them';
+    'You need at least THREE potions to defeat the dragon. The tavern sells them for 30 gold each.\n If you are low on gold, try getting some off a goblin in the deep forest!';
   textArea.appendChild(textDiv);
 
   const buttonArea = document.querySelector('.buttonArea');
@@ -581,6 +581,7 @@ function getDeepForestText() {
 function startGame() {
   startButton.remove();
   continueButton.remove();
+  coverImage.remove();
   resetStats();
   const location = document.querySelector('.location');
   location.innerText = '- Castle Town -';
@@ -622,6 +623,7 @@ function continueStartScene() {
   loadStats();
   startButton.remove();
   continueButton.remove();
+  coverImage.remove();
   const buttonArray = getNewButton(3);
   const imageDiv = document.createElement('div');
   const button1 = buttonArray[0];
@@ -870,7 +872,7 @@ function goToTavern() {
   buttonArea.appendChild(button3);
 
   textDiv.innerText =
-    'A lady at the bar tells you that she saw the dragon fly off towards the forest.\nIn the back of the Tavern is a door that leads to the forest path.\n Be careful though!';
+    'A patron tells you that she saw the dragon fly off towards the mountain.\nIn the back of the Tavern is a door that leads to the forest.\n Be careful though, maybe bring one of these potions for 30 gold!';
 
   button1.onclick = goToTown;
   button2.onclick = goToCastle;
@@ -910,7 +912,7 @@ function goToForest() {
   buttonArea.appendChild(button3);
 
   textDiv.innerText =
-    'In the forest there are two diverging paths. One leads deeper into the forest and one leads to the mountain. In the deep forest there are goblins so you should get your weapon ready if you want to go that way. ';
+    'In the forest there are two paths. One leads deeper into the forest and one leads to the mountain. In the deep forest there are random encounters with gold carrying goblins so you need a weapon if you want to go that way. If you do not immediately come upon a goblin, just keep going deeper. They are out there.';
 
   textArea.appendChild(textDiv);
 
