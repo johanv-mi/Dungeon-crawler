@@ -461,7 +461,7 @@ function dragonInfo() {
   button2.innerText = "Go to dragon's lair";
 
   imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
+  imageDiv.innerHTML = "<img src= 'assets/dragonchecker.jpg'>";
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
   const imageArea = document.querySelector('.imageArea');
@@ -507,7 +507,7 @@ function winScreen() {
   const button1 = buttonArray[0];
 
   button1.innerText = 'Start over';
-  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
+  imageDiv.innerHTML = "<img src= 'assets/dragonkillscreen.jpg'>";
 
   const buttonArea = document.querySelector('.buttonArea');
   const textDiv = document.createElement('div');
@@ -516,7 +516,7 @@ function winScreen() {
   textDiv.setAttribute('id', 'textDiv');
 
   textDiv.innerText =
-    'A winner is you!! \n You killed the dragon and saved the king.\n Good job and thank you for playing';
+    'A winner is you!! \n You killed the dragon and saved the king.\n Good job and thank you for playing!';
 
   imageArea.appendChild(imageDiv);
   buttonArea.appendChild(button1);
