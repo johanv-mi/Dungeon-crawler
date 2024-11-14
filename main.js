@@ -7,9 +7,9 @@ function main() {
 }
 
 let inventory = [];
-let health = 100;
-let goblinHealth = 120;
-let dragonHealth = 300;
+let health = 150;
+let goblinHealth = 100;
+let dragonHealth = 200;
 let gold = 0;
 
 function saveStats(key, value) {
@@ -175,29 +175,29 @@ function fightGoblin() {
   if (wpn.innerText == '[SWORD]') {
     if (randomNumber == 1) {
       console.log(' Crit Hit');
-      goblinHealth -= 40;
+      goblinHealth -= 60;
       textDiv.innerText =
         'Critical hit with your sword! Goblin takes a lot of damage. Goblin health: ' +
         goblinHealth;
     } else if (randomNumber < 8) {
       console.log('Hit');
-      goblinHealth -= 20;
+      goblinHealth -= 25;
       textDiv.innerText =
         'Quick hit with your sword! Goblin health: ' + goblinHealth;
     } else {
       console.log('Miss');
-      health -= 20;
+      health -= 10;
       textDiv.innerText = 'Miss! The Goblin counterattacks.';
       healthCounter.innerText = health;
       saveStats('health', health);
     }
   } else if (wpn.innerText == '[AXE]') {
     if (randomNumber < 6) {
-      goblinHealth -= 45;
+      goblinHealth -= 50;
       textDiv.innerText = 'Heavy blow! Goblin health: ' + goblinHealth;
     } else {
       console.log('Miss');
-      health -= 20;
+      health -= 10;
       textDiv.innerText = 'Miss! The Goblin counterattacks.';
       healthCounter.innerText = health;
       saveStats('health', health);
@@ -237,7 +237,7 @@ function fightDragon() {
   if (wpn.innerText == '[SWORD]') {
     if (randomNumber == 1) {
       console.log(' Crit Hit');
-      dragonHealth -= 40;
+      dragonHealth -= 50;
       textDiv.innerText =
         'Critical hit with your sword! Dragon takes a lot of damage. Dragon health: ' +
         dragonHealth;
