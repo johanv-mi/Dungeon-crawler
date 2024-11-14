@@ -289,7 +289,7 @@ function goToGoblin() {
 
   const imageDiv = document.createElement('div');
   imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'goblin.jpg'>";
+  imageDiv.innerHTML = "<img src= 'assets/goblin.jpg'>";
 
   const location = document.querySelector('.location');
   location.innerText = 'Battle with goblin';
@@ -349,7 +349,7 @@ function goToDragon() {
   const imageArea = document.querySelector('.imageArea');
   textDiv.setAttribute('id', 'textDiv');
   imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'dragon.jpg'>";
+  imageDiv.innerHTML = "<img src= 'assets/dragon.jpg'>";
 
   textArea.appendChild(textDiv);
   imageArea.appendChild(imageDiv);
@@ -428,7 +428,7 @@ function killScreen() {
   const imageArea = document.querySelector('.imageArea');
   textDiv.setAttribute('id', 'textDiv');
   imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
+  imageDiv.innerHTML = "<img src= 'assets/killscreen.jpg'>";
 
   textArea.appendChild(textDiv);
   imageArea.appendChild(imageDiv);
@@ -598,7 +598,7 @@ function startGame() {
 
   textDiv.setAttribute('id', 'textDiv');
   imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'castle.jpg'>";
+  imageDiv.innerHTML = "<img src= 'assets/castletown.jpg'>";
   textDiv.innerText =
     'Welcome to the game. You are currently in the Castle Town. Please feel free to look around.';
 
@@ -669,7 +669,7 @@ function goToTown() {
   button3.innerText = 'Go to Tavern';
 
   imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
+  imageDiv.innerHTML = "<img src= 'assets/castletown.jpg'>";
 
   const buttonArea = document.querySelector('.buttonArea');
 
@@ -725,7 +725,7 @@ function goToBlacksmith() {
   textDiv.setAttribute('id', 'textDiv');
   optionButtons.setAttribute('id', 'optionButtons');
   imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'blacksmith.jpg'>";
+  imageDiv.innerHTML = "<img src= 'assets/blacksmith.jpg'>";
 
   textArea.appendChild(textDiv);
   textArea.appendChild(optionButtons);
@@ -769,7 +769,7 @@ function goToCastle() {
   const buttonArea = document.querySelector('.buttonArea');
   const imageArea = document.querySelector('.imageArea');
   imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
+  imageDiv.innerHTML = "<img src= 'assets/castlehall.jpg'>";
 
   const textArea = document.querySelector('.textArea');
   textArea.appendChild(textDiv);
@@ -805,7 +805,7 @@ function goToThroneRoom() {
 
   const buttonArea = document.querySelector('.buttonArea');
   imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'throneroom.jpg'>";
+  imageDiv.innerHTML = "<img src= 'assets/throneroom.jpg'>";
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
   const imageArea = document.querySelector('.imageArea');
@@ -854,7 +854,7 @@ function goToTavern() {
   const imageArea = document.querySelector('.imageArea');
   textDiv.setAttribute('id', 'textDiv');
   imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
+  imageDiv.innerHTML = "<img src= 'assets/tavern.jpg'>";
 
   textArea.appendChild(textDiv);
   textArea.appendChild(optionButtons);
@@ -892,7 +892,7 @@ function goToForest() {
 
   const buttonArea = document.querySelector('.buttonArea');
   imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'forest.jpg'>";
+  imageDiv.innerHTML = "<img src= 'assets/forest.jpg'>";
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
   const imageArea = document.querySelector('.imageArea');
@@ -931,7 +931,7 @@ function goToDeepForest() {
 
   const buttonArea = document.querySelector('.buttonArea');
   imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
+  imageDiv.innerHTML = "<img src= 'assets/deepforest.jpg'>";
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
   const imageArea = document.querySelector('.imageArea');
@@ -967,7 +967,7 @@ function goToMountain() {
 
   const buttonArea = document.querySelector('.buttonArea');
   imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'mountain.jpg'>";
+  imageDiv.innerHTML = "<img src= 'assets/mountain.jpg'>";
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
   const imageArea = document.querySelector('.imageArea');
