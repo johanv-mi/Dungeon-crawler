@@ -387,7 +387,7 @@ function goblinKillScreen() {
   const textArea = document.querySelector('.textArea');
   const imageArea = document.querySelector('.imageArea');
   imageDiv.setAttribute('id', 'imageDiv');
-  imageDiv.innerHTML = "<img src= 'tavern.jpg'>";
+  imageDiv.innerHTML = "<img src= 'assets/goblinkillscreen.jpg'>";
   textDiv.setAttribute('id', 'textDiv');
 
   textArea.appendChild(textDiv);
@@ -623,7 +623,7 @@ function continueStartScene() {
   startButton.remove();
   continueButton.remove();
   const buttonArray = getNewButton(3);
-
+  const imageDiv = document.createElement('div');
   const button1 = buttonArray[0];
   const button2 = buttonArray[1];
   const button3 = buttonArray[2];
@@ -631,6 +631,9 @@ function continueStartScene() {
   button1.innerText = 'Go to blacksmith';
   button2.innerText = 'Go to Castle';
   button3.innerText = 'Go to Tavern';
+
+  imageDiv.setAttribute('id', 'imageDiv');
+  imageDiv.innerHTML = "<img src= 'assets/castletown.jpg'>";
 
   const buttonArea = document.querySelector('.buttonArea');
   buttonArea.appendChild(button1);
@@ -642,12 +645,14 @@ function continueStartScene() {
 
   const textDiv = document.createElement('div');
   const textArea = document.querySelector('.textArea');
+  const imageArea = document.querySelector('.imageArea');
 
   textDiv.setAttribute('id', 'textDiv');
 
   textDiv.innerText =
     'You are currently in the Castle Town. Please feel free to look around.';
 
+  imageArea.appendChild(imageDiv);
   textArea.appendChild(textDiv);
 
   button1.onclick = goToBlacksmith;
