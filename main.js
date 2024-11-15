@@ -1,17 +1,20 @@
 window.addEventListener('DOMContentLoaded', main);
 
+/**Main function that runs as soon as the DOM is loaded */
 function main() {
   console.log('Allt redo');
   startButton.onclick = startGame;
   continueButton.onclick = continueStartScene;
 }
 
+/**Global variables */
 let inventory = [];
 let health = 150;
 let goblinHealth = 100;
 let dragonHealth = 200;
 let gold = 0;
 
+/**This function saves the player stats to localstorage. */
 function saveStats(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
 }
@@ -64,19 +67,19 @@ function resetStats() {
   localStorage.removeItem('weapon');
   localStorage.removeItem('inventory');
 }
-
+/** Update function to localstorage for health */
 function updateHealth(newHealth) {
   health = newHealth;
   document.querySelector('#health').innerText = health;
   saveStats('health', health);
 }
-
+/**Update function to localstorage for gold  */
 function updateGold(newGold) {
   gold = newGold;
   document.querySelector('#money').innerText = gold;
   saveStats('gold', gold);
 }
-
+/**Update function to localstorage for the inventory  */
 function updateInventory(newInventory) {
   inventory = newInventory;
   document.querySelector('.inventory').innerText = inventory;
@@ -577,7 +580,7 @@ function getDeepForestText() {
 
   return deepForestText;
 }
-
+/** This scene starts the game fresh with reset stats. */
 function startGame() {
   startButton.remove();
   continueButton.remove();
@@ -617,7 +620,7 @@ function startGame() {
   button2.onclick = goToCastle;
   button3.onclick = goToTavern;
 }
-
+/**This is the first scene if you start over with the saved stats. */
 function continueStartScene() {
   console.log('Castle Town');
   loadStats();
